@@ -1,0 +1,90 @@
+.adminFooter{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgb(141, 238, 162);
+    padding-left: 100px;
+    display: flex;
+}
+.adminFooterLogo{
+    width: 25%;
+}
+.adminFooterIcon{
+    width: 20%;
+}
+.adminFooterLogo img{
+    margin-top: 10px;
+    height: 60px;
+    margin-left: 100px;
+    background-image: none;
+}
+.adminFooterTextIcon{
+    display: flex;
+}
+.adminFooterIconBtn{
+    margin-top: 60px;
+    margin-left: 50px;
+}
+.adminFooterIconBtn button{
+    width: 150px;
+    height: 40px;
+    border-radius: 20px;
+    color: white;
+    background-color: rgb(229, 118, 233);
+    border-color: red;
+    cursor: pointer;
+}
+.adminFooterIconBtn button:hover{
+    width: 150px;
+    height: 40px;
+    border-radius: 20px;
+    color: rgb(238, 11, 11);
+    background-color: rgb(245, 239, 245);
+    border-color: red;
+}
+.adminFooter-Mobile{
+    display: none;
+}
+.adminFooterText_Web{
+    text-decoration-line: underline;
+    cursor: pointer;
+}
+
+/* Mobile Width < 740px */
+@media only screen and  (max-width: 739px){
+    .adminFooter{
+        display: none;
+    }
+    .adminFooter-Mobile{
+        display: block;
+        background-color: rgb(141, 238, 162);
+        text-align: center;
+    }
+    .adminFooterLogo-Mobile img{
+        margin-top: 10px;
+        height: 60px;
+        background-image: none;
+    }
+    .adminFooterIconBtn-Mobile button{
+        width: 150px;
+        height: 40px;
+        border-radius: 20px;
+        color: white;
+        background-color: rgb(229, 118, 233);
+        border-color: red;
+        cursor: pointer;
+    }
+    .adminFooterIconBtn-Mobile button:hover{
+        width: 150px;
+        height: 40px;
+        border-radius: 20px;
+        color: rgb(238, 11, 11);
+        background-color: rgb(245, 239, 245);
+        border-color: red;
+    }
+    .adminFooterText-Mobile_Web{
+        cursor: pointer;
+        text-decoration-line: underline;
+    }
+}
