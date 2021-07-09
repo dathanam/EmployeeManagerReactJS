@@ -2,22 +2,25 @@ import React from 'react';
 import '../Style/AdminFooter.css';
 
 function Footer() {
+    function Logout(){
+        localStorage.removeItem("accessToken")
+        alert("Logout success")
+    }
     return (
         <>
         <div className="adminFooter">
             <div className="adminFooterLogo">
-                <img src="https://inbienquangcao.vn/wp-content/uploads/2020/11/Logo-qua%CC%82n-%C4%91o%CC%A3%CC%82i-nha%CC%82n-da%CC%82n-Vie%CC%A3%CC%82t-Nam-nga%CC%80y-nay.png" alt="logo" />
-                <h2>NEWWAVE SOLUTIONS</h2>
+                <img src="https://newwave.vn/wp-content/uploads/2020/02/logo-nws-2_latest.png" alt="logo" />
             </div>
             <div className="adminFooterText">
-                <h4 className="address"> <i class="fal fa-map-marker-alt"></i> 7th Floor, MITEC building, Yen Hoa, Hanoi, Vietnam</h4>
-                <h4> <i class="fas fa-phone-office"></i> +8424.6663.5848</h4>
-                <h4> <i class="fas fa-phone"></i> 0382.116.330</h4>
-                <h4 className="adminFooterText_Web"> <i class="fab fa-google"></i> newwave.com.vn</h4>
+                <h4 className="address"> <i className="fal fa-map-marker-alt"></i> 7th Floor, MITEC building, Yen Hoa, Hanoi, Vietnam</h4>
+                <h4> <i className="fas fa-phone-office"></i> +8424.6663.5848</h4>
+                <h4> <i className="fas fa-phone"></i> 0382.116.330</h4>
+                <h4 className="adminFooterText_Web"> <i className="fab fa-google"></i> newwave.com.vn</h4>
             </div>
             <div className="adminFooterIcon">
                 <div className="adminFooterIconBtn">
-                    <button>LOGOUT</button>
+                    <button onClick={Logout}>LOGOUT</button>
                 </div>
 
             </div>
@@ -28,7 +31,7 @@ function Footer() {
         <div className="adminFooter-Mobile">
             
             <div className="adminFooterLogo-Mobile">
-                <img src="https://inbienquangcao.vn/wp-content/uploads/2020/11/Logo-qua%CC%82n-%C4%91o%CC%A3%CC%82i-nha%CC%82n-da%CC%82n-Vie%CC%A3%CC%82t-Nam-nga%CC%80y-nay.png" alt="logo" />
+                <img src="https://newwave.vn/wp-content/uploads/2020/02/logo-nws-2_latest.png" alt="logo" />
                 <h2>NEWWAVE SOLUTIONS</h2>
             </div>
             <div className="adminFooterIcon-Mobile">
@@ -37,10 +40,10 @@ function Footer() {
                 </div>
             </div>
             <div className="adminFooterText-Mobile">
-                <h4> <i class="fal fa-map-marker-alt"></i> 7th Floor, MITEC building, Yen Hoa, Hanoi, Vietnam</h4>
-                <h4> <i class="fas fa-phone-office"></i> +8424.6663.5848</h4>
-                <h4> <i class="fas fa-phone"></i> 0382.116.330</h4>
-                <h4 className="adminFooterText-Mobile_Web"> <i class="fab fa-google"></i> newwave.com.vn</h4>
+                <h4> <i className="fal fa-map-marker-alt"></i> 7th Floor, MITEC building, Yen Hoa, Hanoi, Vietnam</h4>
+                <h4> <i className="fas fa-phone-office"></i> +8424.6663.5848</h4>
+                <h4> <i className="fas fa-phone"></i> 0382.116.330</h4>
+                <h4 className="adminFooterText-Mobile_Web"> <i className="fab fa-google"></i> newwave.com.vn</h4>
                 <br />
             </div>
             

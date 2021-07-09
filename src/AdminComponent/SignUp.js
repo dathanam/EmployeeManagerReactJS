@@ -11,28 +11,29 @@ function SignUp() {
                 <div className="signUpInput">
                     <form className="signUpForm">
                         <div className="signUpInputDev">
-                            <label for="name">name:    </label>
+                            <label htmlFor="name">name:    </label>
                             <input id="name" type="text" />
                         </div>
                         <div className="signUpInputDev">
-                            <label for="email">Email:    </label>
+                            <label htmlFor="email">Email:    </label>
                             <input id="email" type="text" />
                         </div>
                         <div className="signUpInputDev">
-                            <label for="phoneNumber">Phone Number:    </label>
+                            <label htmlFor="phoneNumber">Phone Number:    </label>
                             <input id="phoneNumber" type="text" />
                         </div>
                         <div className="signUpInputDev">
-                            <label for="userName">User Name:    </label>
+                            <label htmlFor="userName">User Name:    </label>
                             <input id="userName" type="text" />
+                        </div>
+                        <div className="signUpBtn">
+                            <div className="signUpInputDevBtn">
+                                <button>SIGN UP</button>
+                            </div>
                         </div>
                     </form>
                 </div>
-                <div className="signUpBtn">
-                    <div className="signUpInputDevBtn">
-                        <button>SIGN UP</button>
-                    </div>
-                </div>
+
             </div>
         </div>
     );

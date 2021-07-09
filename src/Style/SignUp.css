@@ -1,12 +1,15 @@
 .signUpPage {
     text-align: center;
+    background-image: url("https://znews-photo.zadn.vn/w660/Uploaded/lce_uxlcq/2021_04_08/EV7XLYB335EGFFJVU3IGCOTBCE.jpeg");
+    background-size: 100%;
 }
 .SignUp {
     display: inline-block;
     width: 400px;
     background-color: rgb(249, 155, 49);
     text-align: left;
-    margin-top: 20px;
+    margin-top: 100px;
+    margin-bottom: 35px;
 }
 .SignUpLogo img {
     height: 100px;

@@ -1,32 +1,28 @@
-.adminFooter{
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+.userFooter{
     background-color: rgb(68, 53, 68);
     padding-left: 100px;
     display: flex;
 }
-.adminFooterLogo{
+.userFooterLogo{
     width: 25%;
 }
-.adminFooterIcon{
+.userFooterIcon{
     width: 20%;
 }
-.adminFooterLogo img{
+.userFooterLogo img{
     margin-top: 60px;
     height: 60px;
     margin-left: 100px;
     background-image: none;
 }
-.adminFooterTextIcon{
+.userFooterTextIcon{
     display: flex;
 }
-.adminFooterIconBtn{
+.userFooterIconBtn{
     margin-top: 60px;
     margin-left: 50px;
 }
-.adminFooterIconBtn button{
+.userFooterIconBtn button{
     width: 150px;
     height: 40px;
     border-radius: 20px;
@@ -35,7 +31,7 @@
     border-color: red;
     cursor: pointer;
 }
-.adminFooterIconBtn button:hover{
+.userFooterIconBtn button:hover{
     width: 150px;
     height: 40px;
     border-radius: 20px;
@@ -43,30 +39,30 @@
     background-color: rgb(141, 238, 162);
     border-color: red;
 }
-.adminFooter-Mobile{
+.userFooter-Mobile{
     display: none;
 }
-.adminFooterText_Web{
+.userFooterText_Web{
     text-decoration-line: underline;
     cursor: pointer;
 }
 
 /* Mobile Width < 740px */
 @media only screen and  (max-width: 739px){
-    .adminFooter{
+    .userFooter{
         display: none;
     }
-    .adminFooter-Mobile{
+    .userFooter-Mobile{
         display: block;
         background-color: rgb(68, 53, 68);
         text-align: center;
     }
-    .adminFooterLogo-Mobile img{
+    .userFooterLogo-Mobile img{
         margin-top: 10px;
         height: 60px;
         background-image: none;
     }
-    .adminFooterIconBtn-Mobile button{
+    .userFooterIconBtn-Mobile button{
         width: 150px;
         height: 40px;
         border-radius: 20px;
@@ -75,15 +71,15 @@
         border-color: red;
         cursor: pointer;
     }
-    .adminFooterIconBtn-Mobile button:hover{
+    .userFooterIconBtn-Mobile button:hover{
         width: 150px;
         height: 40px;
         border-radius: 20px;
         color: rgb(238, 11, 11);
-        background-color: rgb(245, 239, 245);
+        background-color: rgb(141, 238, 162);
         border-color: red;
     }
-    .adminFooterText-Mobile_Web{
+    .userFooterText-Mobile_Web{
         cursor: pointer;
         text-decoration-line: underline;
     }
