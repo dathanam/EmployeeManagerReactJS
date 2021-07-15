@@ -1,41 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import '../Style/AdminHeader.css'
 import { Link } from "react-router-dom";
-import Axios from 'axios';
+import jwt_decode from "jwt-decode"
 
 function Header() {
-    
-    const [dataUser, setDataUser] = useState({})
 
-    console.log("fdsf", dataUser)
-    // const isLogin = localStorage.getItem("accessToken");
+    const DataLocalStorage = localStorage.getItem("accessToken");
 
-    var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer" + localStorage.getItem("accessToken"));
-        var requestOptions = {
-            headers: myHeaders,
-        };
-    const getDataUser = async () => {
-        const response = await Axios
-            .get(`http://192.168.20.233:3000/user`,requestOptions)
-            .catch((err) => console.log("Error: ", err));
-
-        if (response && response.data) {
-            setDataUser(response.data[0])
+    function viewNameUser() {
+        if (DataLocalStorage != null) {
+            const decode = jwt_decode(DataLocalStorage);
+            return (
+                <h3><i className="far fa-user"></i> {decode.username}</h3>
+            )
+        }
+        else{
+            return (
+                <h3><i className="far fa-user"></i> No User</h3>
+            )
         }
     }
-    useEffect(() => {
-        getDataUser();
-    }, []);
 
-    return (
+    return (      
         <div className="adminHeader">
             <div className="adminLogo">
                 <img src="https://newwave.vn/wp-content/uploads/2020/02/logo-nws-2_latest.png" alt="logo" />
             </div>
 
             <div className="navMobileUsername">
-                <h3><i className="far fa-user"></i>{dataUser.username}</h3>
+                {viewNameUser()}
             </div>
 
             <label htmlFor="navMobileInput" className="adminNavbarBtn">
@@ -81,7 +74,7 @@ function Header() {
                         <Link to="/admin/employee" className="nav-link">Employee</Link>
                     </li>
                     <div className="AdminLog">
-                        <h3> <i className="far fa-user"></i> {dataUser.username}</h3>
+                        {viewNameUser()}
                     </div>
                 </ul>
 

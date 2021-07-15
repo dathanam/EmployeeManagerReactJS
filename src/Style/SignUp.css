@@ -39,8 +39,11 @@
     height: 25px;
     width: 200px;
 }
-.signUpInputDevBtn {
+.signUpBtn {
     text-align: center;
+    margin-bottom: 30px;
+}
+.signUpInputDevBtn{
     margin-bottom: 30px;
 }
 .signUpInputDevBtn button {
@@ -84,5 +87,9 @@
         margin-top: 60px;
         margin-bottom: 0px;
         
+    }
+    .signUpInputDevBtn{
+        margin-top: 20px;
+        text-align: center;
     }
 }

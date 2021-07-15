@@ -9,13 +9,15 @@ import Home from './UserComponent/Home';
 function LayoutUser() {
     return (
         <Router>
-            <Header />
-            <Switch>     
-                <Route path="/" exact component={Home} />         
-                <Route path="/login" component={Login} />
-                <Route path="/signup" component={SignUp} />
-            </Switch>
-            <Footer />
+            <div>
+                <Header />
+                <Switch>
+                    <Route path="/" exact component={Home} />
+                    <Route path="/admin/login" component={Login} />
+                    <Route path="/signup" component={SignUp} />
+                </Switch>
+                <Footer />
+            </div>
         </Router>
     );
 }

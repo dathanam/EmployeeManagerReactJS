@@ -1,9 +1,17 @@
 import React from 'react';
 import '../Style/AdminFooter.css';
+import {useHistory} from 'react-router-dom';
 
 function Footer() {
+    const history = useHistory();
+
     function Logout(){
-        localStorage.removeItem("accessToken")
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("username");
+        localStorage.removeItem("email");
+        localStorage.removeItem("role");
+        localStorage.removeItem("loginFrist");
+        history.push("/")
         alert("Logout success")
     }
     return (

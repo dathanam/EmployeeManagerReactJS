@@ -1,33 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../UserComponent/UserStyle/Header.css';
-import { Link } from "react-router-dom";
-import { Redirect } from "react-router-dom";
-
-import { useHistory } from "react-router-dom";
+import { BrowserRouter as Link } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 
 function Header() {
+
+    let userExists = localStorage.getItem("accessToken");
     const history = useHistory();
-    const [redirect, setRedirect] = useState({
-        redirect: true
-    })
 
-    let isLogin = localStorage.getItem("accessToken");
-    // if (isLogin != null) {
-    //     setRedirect({
-    //         redirect: true
-    //     })
-    // }
-
-    function checkkIsLogin() {
-        if (redirect) {
-            console.log("null");
-            return <Redirect to="/admin/login" />;
-            // history.push("/admin/login")
+    let checkkIsLogin = () => {
+        if (userExists !== null) {
+            history.push("/admin")
+        } else {
+            history.push("/admin/login")
         }
-        else
-        console.log("Cos")
-            return <Redirect to="/admin/login" />;
-        // history.push("/admin")
     }
 
     return (
@@ -53,18 +39,18 @@ function Header() {
                         </li>
                         <li>
                             <i className="fab fa-product-hunt"></i>
-                            <Link to="/user/department" className="nav-link">Product</Link>
+                            <Link to="/user/product" className="nav-link">Product</Link>
                         </li>
                         <li>
                             <i className="fas fa-address-card"></i>
-                            <Link to="/user/employee" className="nav-link">About Us</Link>
+                            <Link to="/user/aboutus" className="nav-link">About Us</Link>
                         </li>
                         <li>
                             <i className="fas fa-sign-in-alt"></i>
-                            <button onClick={checkkIsLogin}>Loginnn</button>
-                            <Link to="/login" className="nav-link">login</Link>
+                            <button onClick={() => {
+                                checkkIsLogin()
+                            }}>Login</button>
                         </li>
-                        <button onClick={checkkIsLogin}>Loginnn</button>
                     </ul>
                 </label>
             </div>
@@ -83,8 +69,9 @@ function Header() {
                         <Link to="/user/employee" className="nav-link">About us</Link>
                     </li>
                     <li>
-                        <Link to="/login" className="nav-link">Login</Link>
-                        <button onClick={checkkIsLogin}>Loginnn</button>
+                        <button onClick={() => {
+                            checkkIsLogin()
+                        }}>Login</button>
                     </li>
                 </ul>
 

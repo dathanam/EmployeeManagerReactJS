@@ -5,14 +5,12 @@ import User from './LayoutUser';
 
 function App() {
   return (
-    <div className="AppEmployee">
       <Router>
       <Switch>
         <Route path="/" exact component={User} />
         <Route path="/admin" component={Admin} />
       </Switch>
     </Router>
-    </div>
   );
 }
 
