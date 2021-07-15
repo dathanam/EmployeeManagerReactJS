@@ -80,6 +80,10 @@ Link:hover{
     display: none;
 }
 
+.fa-user{
+    margin-top: 14px;
+}
+
 
 /* Mobile Width < 740px */
 @media only screen and  (max-width: 739px){

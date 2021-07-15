@@ -12,7 +12,7 @@ function Header() {
         if (userExists !== null) {
             history.push("/admin")
         } else {
-            history.push("/admin/login")
+            history.push("/login")
         }
     }
 

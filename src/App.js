@@ -6,11 +6,11 @@ import User from './LayoutUser';
 function App() {
   return (
       <Router>
-      <Switch>
-        <Route path="/" exact component={User} />
-        <Route path="/admin" component={Admin} />
-      </Switch>
-    </Router>
+        <Switch>
+          <Route path="/" exact component={User} />
+          <Route path="/admin" component={Admin} />
+        </Switch>
+      </Router>
   );
 }
 

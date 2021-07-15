@@ -9,6 +9,9 @@ function Department() {
 
     const [listDepartment, setListDepartment] = useState([]);
 
+    let department = [...listDepartment]
+
+
     const getArr = async () => {
         const response = await axios
             .get("/department", { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
@@ -21,7 +24,7 @@ function Department() {
         getArr();
     }, []);
 
-    // view table
+    //////// view table
     function viewTable() {
         const checkRole = localStorage.getItem("role")
         if (checkRole === 0) {
@@ -31,22 +34,25 @@ function Department() {
                         <div className="col col-1">id</div>
                         <div className="col col-3">Department Name</div>
                         <div className="col col-2">Office Phone</div>
+                        <div className="col col-1">action</div>
                     </li>
                     {
-                        listDepartment.map((item) => {
+                        department.map((item) => {
                             return (
-                                <li className="table-row">
+                                <li className="table-row" key={item.id}>
                                     <div className="col col-1" data-label="Job Id">{item.id}</div>
                                     <div className="col col-3" data-label="Customer Name">{item.name}</div>
                                     <div className="col col-2" data-label="Amount">{item.officePhone}</div>
+                                    <div className="col col-1" data-label="Payment Status">
+                                        <i className="fas fa-eye"></i>
+                                    </div>
                                 </li>
                             )
                         })
                     }
                 </ul>
             )
-        }
-        else {
+        } else {
             return (
                 <ul className="responsive-table">
                     <li className="table-header">
@@ -56,9 +62,9 @@ function Department() {
                         <div className="col col-1">action</div>
                     </li>
                     {
-                        listDepartment.map((item) => {
+                        department.map((item) => {
                             return (
-                                <li className="table-row">
+                                <li className="table-row" key={item.id}>
                                     <div className="col col-1" data-label="Job Id">{item.id}</div>
                                     <div className="col col-3" data-label="Customer Name">{item.name}</div>
                                     <div className="col col-2" data-label="Amount">{item.officePhone}</div>
@@ -70,7 +76,8 @@ function Department() {
                                                 })
                                                 .catch(
                                                 )
-                                        }} class="fas fa-trash-alt"></i>
+                                        }} className="fas fa-trash-alt"></i>
+                                        <i className="fas fa-eye"></i>
                                     </div>
                                 </li>
                             )
@@ -82,20 +89,18 @@ function Department() {
     }
 
     const [dataSearch, setDataSearch] = useState({
-        id: ""
+        search: ""
     })
-    const submitSearch = async () => {
-        const id = dataSearch.id;
-        const response = await axios
-            .get(`/department/` + dataSearch.id, { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
-            .catch((err) => console.log("Error: ", err));
-        if (response && response.data) {
-            setListDepartment([response.data])
+    const submitSearch = () => {
+        if (dataSearch.search === "") {
+            getArr();
+        } else {
+            let filterDepartment = listDepartment.filter(function (filter, index, array) {
+                return filter.name === dataSearch.search
+            })
+            department = filterDepartment
         }
     }
-    useEffect(() => {
-        submitSearch();
-    }, [dataSearch.id]);
 
     function handleSearch(e) {
         const newdata = { ...dataSearch };
@@ -110,18 +115,50 @@ function Department() {
             <div className="adminDepertmentTable">
                 <div className="adminDepertmentFunction">
                     <div className="adminDepertmentCreateNew">
-                        <button>New Department</button>
+                        <button data-toggle="modal" data-target="#myModal">New Department</button>
                     </div>
                     <div className="adminDepertmentSearch">
-                        <form onSubmit={(e)=>submitSearch(e)}>
-                            <input onChange={(e) => handleSearch(e)} id="id" value={dataSearch.id} type="text" placeholder="Search" className="adminDepertmentSearchInput"></input>
-                            <button className="adminDepertmentSearchBtn"><i class="fas fa-search"><label htmlFor="Checkbox"></label></i></button>
-                        </form>
+                        <button onClick={() => {
+                            getArr();
+                        }} className="adminDepertmentSearchBtn"><i className="fas fa-reply-all">All</i></button>
+                        <input onChange={(e) => handleSearch(e)} id="search" value={dataSearch.search} type="text" placeholder="name..." className="adminDepertmentSearchInput"></input>
+                        <button onClick={() => {
+                            submitSearch();
+                        }} className="adminDepertmentSearchBtn"><i className="fas fa-search"></i></button>
+
                     </div>
                 </div>
                 {
                     viewTable()
                 }
+            </div>
+            {/* Create New */}
+            <div className="modal fade" id="myModal" role="dialog">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <button type="button" className="close" data-dismiss="modal">&times;</button>
+                            <h4 className="modal-title">New Department</h4>
+                        </div>
+                        <div className="modal-body">
+                            <form>
+                                <div className="createDepartment">
+                                    <label htmlFor="name">Name: </label>
+                                    <input id="name" type="text"></input>
+                                </div>
+
+                                <div className="createDepartment">
+                                    <label htmlFor="officePhone">Office Phone: </label>
+                                    <input id="officePhone" type="text"></input>
+                                </div>
+                                <div className="createDepartmentBtn">
+                                    <button type="button" className="btn btn-close" data-dismiss="modal">Close</button>
+                                    <button type="button" className="btn btn-save" >Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );

@@ -11,12 +11,12 @@ function Header() {
         if (DataLocalStorage != null) {
             const decode = jwt_decode(DataLocalStorage);
             return (
-                <h3><i className="far fa-user"></i> {decode.username}</h3>
+                <h4><i className="far fa-user"></i> {decode.username}</h4>
             )
         }
         else{
             return (
-                <h3><i className="far fa-user"></i> No User</h3>
+                <h4><i className="far fa-user"></i> No User</h4>
             )
         }
     }

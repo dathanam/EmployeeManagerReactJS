@@ -1,28 +1,30 @@
 import React, {useState} from 'react';
-import '../Style/SignUp.css';
-import Axios from 'axios';
+import '../UserComponent/UserStyle/SignUp.css';
 import {useHistory} from 'react-router-dom';
+import { axios } from '../HeaderAPI';
 
 function SignUp() {
     const history = useHistory();
-    const urlSignUp = "http://192.168.20.233:3000/auth/register"
     const [dataSignUp, setDataSignUp] = useState({
         email: "",
     })
     function submit(e) {
         e.preventDefault();
-
-        Axios.post(urlSignUp, dataSignUp)
+        axios.post(`auth/register`, dataSignUp)
         .then((res) => {
-            if (res.statusCode === 201) {
+            console.log(res)
+            if (res.data.statusCode === 200) {
                 alert("Vui lòng check email");
-                history.push('/admin/login')
+                history.push('/login')
             }else{
                 alert("Tài khoản đã tồn tại");
                 setDataSignUp({
                     email: "",
                 })
             }
+        })
+        .catch((err) =>{
+            alert("Error!")
         })
     }
 

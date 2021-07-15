@@ -63,14 +63,6 @@
     display: none;
 }
 
-.changePass{
-    width: 300px;
-    position: fixed;
-    top: 0;
-    right: 0;
-    background-color: chartreuse;
-}
-
 /* Mobile Width < 740px */
 @media only screen and (max-width: 739px) {
     .loginBtn_Mobile{
