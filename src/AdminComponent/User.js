@@ -8,7 +8,7 @@ function User() {
     const DataLocalStorage = localStorage.getItem("accessToken");
 
     const [listUser, setListUser] = useState([]);
-    const getArrUser = async () => {
+    const getArr = async () => {
         const response = await axios
             .get("/user", { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
             .catch((err) => console.log("Error: ", err));
@@ -17,7 +17,7 @@ function User() {
         }
     }
     useEffect(() => {
-        getArrUser();
+        getArr();
     }, []);
 
     // View chức năng
@@ -70,7 +70,7 @@ function User() {
                                         <i onClick={() => {
                                                 axios.delete(`user/` + item.id, { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
                                                     .then(res => {
-                                                        getArrUser();
+                                                        getArr();
                                                     })
                                                     .catch(
                                                     )}} class="fas fa-trash-alt"></i>

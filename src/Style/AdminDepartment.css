@@ -28,6 +28,15 @@
     width: 400px;
     text-align: center;
 }
+.modal-dialog-employee{
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding-left: 200px;
+    padding-right: 200px;
+}
 .modal-title{
     text-transform: uppercase;
 }
@@ -52,6 +61,7 @@
 .createDepartment input{
     display: table-cell;
     margin-bottom: 15px;
+    color: black;
 }
 .createDepartmentBtn{
     margin-top: 10px;
@@ -69,6 +79,13 @@
     color: tomato;
     text-transform: uppercase;
     font-weight: bold;
+}
+.nameDepartmentBtn{
+    background: none;
+    border: none;
+}
+.employeeDepartmentImg{
+    width: 50px;
 }
 /* Mobile Width < 740px */
 @media only screen and  (max-width: 739px){
