@@ -8,7 +8,7 @@
     width: 400px;
     background-color: rgb(249, 155, 49);
     text-align: left;
-    margin-top: 100px;
+    margin-top: 200px;
     margin-bottom: 35px;
 }
 .loginLogo img {
@@ -45,19 +45,20 @@
 .loginInputDevBtn button {
     width: 100px;
     height: 40px;
+    color: rgb(255, 255, 255);
     border-radius: 20px;
-    color: white;
-    background-color: rgb(229, 118, 233);
-    border-color: red;
+    border-color: rgb(231, 46, 46);
+    background-color: rgb(74, 243, 59);
     cursor: pointer;
+    margin: 10px;
+    font-weight: bold;
 }
 .loginInputDevBtn button:hover {
-    width: 100px;
-    height: 40px;
-    border-radius: 20px;
-    color: rgb(238, 11, 11);
-    background-color: rgb(141, 238, 162);
-    border-color: red;
+    opacity: 0.7;
+}
+
+.loginInputDevBtn button link {
+    color: red;
 }
 .loginBtn_Mobile{
     display: none;

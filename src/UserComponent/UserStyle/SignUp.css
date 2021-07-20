@@ -1,29 +1,28 @@
 .signUpPage {
-    text-align: center;
-    background-image: url("https://znews-photo.zadn.vn/w660/Uploaded/lce_uxlcq/2021_04_08/EV7XLYB335EGFFJVU3IGCOTBCE.jpeg");
-    background-size: 100%;
+    /* background-image: url("https://znews-photo.zadn.vn/w660/Uploaded/lce_uxlcq/2021_04_08/EV7XLYB335EGFFJVU3IGCOTBCE.jpeg");
+    background-size: 100%; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.SignUp {
+.signUp {
     display: inline-block;
     width: 400px;
     background-color: rgb(249, 155, 49);
     text-align: left;
-    margin-top: 100px;
+    margin-top: 200px;
     margin-bottom: 35px;
 }
-.SignUpLogo img {
+.signUpLogo img {
     height: 100px;
     background-image: none;
 }
-.SignUpLogo {
+.signUpLogo {
     text-align: center;
     margin-bottom: 10px;
 }
 .signUpInput {
     margin-left: 30px;
-}
-.signUpForm {
-    display: table;
 }
 .signUpInputDev {
     display: table-row;
@@ -32,40 +31,48 @@
 .signUpInputDev label {
     display: table-cell;
     text-transform: uppercase;
+    width: 50%;
+    padding-left: 20px;
 }
 .signUpInputDev input {
     display: table-cell;
     margin-bottom: 30px;
     height: 25px;
-    width: 200px;
+    width: 150px;
 }
-.signUpBtn {
+.signUpInputDevBtn {
     text-align: center;
     margin-bottom: 30px;
 }
-.signUpInputDevBtn{
-    margin-bottom: 30px;
-}
 .signUpInputDevBtn button {
-    width: 150px;
+    width: 100px;
     height: 40px;
+    color: rgb(255, 255, 255);
     border-radius: 20px;
-    color: white;
-    background-color: rgb(229, 118, 233);
-    border-color: red;
+    border-color: rgb(231, 46, 46);
+    background-color: rgb(74, 243, 59);
     cursor: pointer;
+    margin: 10px;
+    font-weight: bold;
 }
 .signUpInputDevBtn button:hover {
-    width: 150px;
+    width: 100px;
     height: 40px;
     border-radius: 20px;
-    color: rgb(238, 11, 11);
-    background-color: rgb(245, 239, 245);
-    border-color: red;
+    opacity: 0.7;
+}
+.signUpBtn_Mobile{
+    display: none;
 }
 
 /* Mobile Width < 740px */
 @media only screen and (max-width: 739px) {
+    .signUpBtn_Mobile{
+        display: block;
+    }
+    .signUpBtn{
+        display: none;
+    }
     .signUpInput {
         margin-bottom: 33px;
         width: fit-content;
@@ -80,16 +87,19 @@
         margin-bottom: 1px;
         width: auto;
     }
+    .signUpInputDev label {
+        padding-left: 0;
+    }
     .signUpInputDev {
         margin-top: 20px;
     }
-    .SignUp {
+    .signUpInputDevBtn{
+        margin-top: 20px;
+    }
+    .signUp {
         margin-top: 60px;
         margin-bottom: 0px;
         
     }
-    .signUpInputDevBtn{
-        margin-top: 20px;
-        text-align: center;
-    }
 }
+

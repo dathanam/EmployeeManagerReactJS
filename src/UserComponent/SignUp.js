@@ -35,8 +35,8 @@ function SignUp() {
     }
     return (
         <div className="signUpPage">
-            <div className="SignUp">
-                <div className="SignUpLogo">
+            <div className="signUp">
+                <div className="signUpLogo">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRTwml7NwMdopeeIeb1hU8scsG3rE0102KsK50-14buI2ZUERO85azqXo9L1YC4C34C-o&usqp=CAU" alt="logo" />
                 </div>
                 <div className="signUpInput">
@@ -50,8 +50,7 @@ function SignUp() {
                         </div>
                     </form>
                 </div>
-
-            </div>
+            </div>        
         </div>
     );
 }

@@ -11,8 +11,6 @@ function Footer() {
                 </div>
                 <div className="userFooterText">
                     <h4 className="address"> <i className="fal fa-map-marker-alt"></i> 7th Floor, MITEC building, Yen Hoa, Hanoi, Vietnam</h4>
-                    <h4> <i className="fas fa-phone-office"></i> +8424.6663.5848</h4>
-                    <h4> <i className="fas fa-phone"></i> 0382.116.330</h4>
                     <h4 className="userFooterText_Web"> <i className="fab fa-google"></i> newwave.com.vn</h4>
                 </div>
                 <div className="userFooterIcon">
@@ -21,7 +19,6 @@ function Footer() {
                             <Link to="/signup" className="nav-link">SIGN UP</Link>
                         </button>
                     </div>
-
                 </div>
             </div>
 

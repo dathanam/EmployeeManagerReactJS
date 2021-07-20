@@ -1,41 +1,53 @@
-.adminDepertmentTable{
+.adminEmployeeTable{
     font-size: 16px;
     margin-left: 200px;
     margin-right: 200px;
 }
-.adminDepertmentFunction{
+.adminEmployeeFunction{
     margin-bottom: 10px;
     margin-top: 70px;
     text-align: right;
 }
-.adminDepertmentCreateNew button{
+.adminEmployeeCreateNew button{
     margin-left: 40px;
     font-size: 16px;
     float: left;
     box-shadow: 0px 0px 5px 0px rgba(250, 0, 0, 0.1);
 }
-.adminDepertmentSearch input{
+.adminEmployeeSearch input{
     font-size: 16px;
     width: 150px;
     box-shadow: 0px 0px 5px 0px rgba(250, 0, 0, 0.1);
 }
-.adminDepertmentSearch button{
+.adminEmployeeSearch button{
     font-size: 16px;
+}
+.nameEmployeeBtn{
+    background: none;
+    border: none;
 }
 
 /* Create New */
-.modal-dialog{
-    width: 400px;
+.modal-dialog-em{
+    width: 650px;
     text-align: center;
 }
 .modal-dialog-employee{
     text-align: center;
     position: fixed;
     top: 0;
-    left: 0;
-    right: 0;
-    padding-left: 200px;
-    padding-right: 200px;
+}
+.modalEmployBody{
+    margin-top: 30px;
+    margin-left: 50px;
+    text-align: left;
+}
+.loginInputDev h4{
+    margin-left: 30px;
+}
+.modalEmployBodyContent{
+    display: table-row;
+    margin-left: 50px;
 }
 .modal-title{
     text-transform: uppercase;
@@ -47,6 +59,9 @@
 .modal-content{
     color: white;
     background-color: rgb(68, 53, 68);
+}
+.modal-body{
+    display: flex;
 }
 .createDepartment{
     text-align: left;
@@ -85,7 +100,12 @@
     border: none;
 }
 .employeeDepartmentImg{
-    width: 50px;
+    width: 70px;
+    height: 50px;
+}
+.employeeDepartmentImgDetail{
+    width: 254px;
+    height: 293px;
 }
 /* Phân Trang */
 .phanTrangBtn{

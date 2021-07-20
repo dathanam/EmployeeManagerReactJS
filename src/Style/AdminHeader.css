@@ -13,6 +13,10 @@
 .adminHeader{
     padding-left: 200px;
     background-color: rgb(68, 53, 68);
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
 }
 .adminLogo img{
     height: 60px;

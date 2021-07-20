@@ -4,6 +4,7 @@ import Header from './AdminComponent/Header';
 import User from './AdminComponent/User';
 import Footer from './AdminComponent/Footer';
 import Department from './AdminComponent/Department';
+import Employee from './AdminComponent/Employee';
 
 function LayoutAdmin() {
     return (
@@ -13,6 +14,7 @@ function LayoutAdmin() {
                 <Switch>
                     <Route path="/admin" exact component={User} />
                     <Route path="/admin/department" component={Department} />
+                    <Route path="/admin/employee" component={Employee} />
                 </Switch>
                 <Footer />
             </Router>

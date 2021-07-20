@@ -66,9 +66,6 @@ function Header() {
                         <Link to="/user/department" className="nav-link">Product</Link>
                     </li>
                     <li>
-                        <Link to="/user/employee" className="nav-link">About us</Link>
-                    </li>
-                    <li>
                         <button onClick={() => {
                             checkkIsLogin()
                         }}>Login</button>

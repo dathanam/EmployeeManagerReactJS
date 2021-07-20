@@ -25,11 +25,12 @@
     font-size: 18px;
     text-transform: uppercase;
     font-weight: bold;
+    color: white;
 }
 .userListNavbar ul li button{
     list-style-type: none;
     margin-right: 100px;
-    font-size: 16px;
+    font-size: 18px;
     text-transform: uppercase;
     font-weight: bold;
     background: none;

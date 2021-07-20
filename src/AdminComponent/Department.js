@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../Style/AdminDepartment.css';
 import { axios } from '../HeaderAPI';
+import { Modal } from 'bootstrap';
 
 function Department() {
 
@@ -10,33 +11,45 @@ function Department() {
     const [departmentID, setDepartmentID] = useState([]);
     const [listDepartment, setListDepartment] = useState([]);
     const [oneDepartment, setOneDepartment] = useState([]);
-
     const [department, setDepartment] = useState([]);
-
+    const [pageStart, setpageStart] = useState({
+        start: 1
+    });
+    const [sumPage, setSumPage] = useState({
+        sumPage: 1
+    });
     const getArr = async () => {
         const response = await axios
-            .get("/department", { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
+            .get("/department/paginate?page=" + pageStart.start + "&limit=5", { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
             .catch((err) => console.log("Error: ", err));
         if (response && response.data) {
-            setListDepartment(response.data)
-            setDepartment(response.data)
+            setListDepartment(response.data.items)
+            setDepartment(response.data.items)
+            if (response.data.meta.totalItems % 5 != 0) {
+                setSumPage({
+                    sumPage: Math.floor(response.data.meta.totalItems / 5) + 1
+                })
+            } else {
+                setSumPage({
+                    sumPage: Math.floor(response.data.meta.totalItems / 5)
+                })
+            }
         }
     }
     useEffect(() => {
         getArr();
-    }, []);
+    }, [pageStart.start]);
 
     //////// view table
     function viewTable() {
         const checkRole = localStorage.getItem("role")
-        if (checkRole === 0) {
+        if (checkRole === "0") {
             return (
                 <ul className="responsive-table">
                     <li className="table-header">
                         <div className="col col-1">i</div>
                         <div className="col col-3">Department Name</div>
                         <div className="col col-2">Office Phone</div>
-                        <div className="col col-1">action</div>
                     </li>
                     {
                         department.map((item) => {
@@ -51,9 +64,6 @@ function Department() {
                                         >{item.nameDepartment}</button>
                                     </div>
                                     <div className="col col-2" data-label="Amount">{item.officePhone}</div>
-                                    <div className="col col-1" data-label="Payment Status">
-                                        <i className="fas fa-eye"></i>
-                                    </div>
                                 </li>
                             )
                         })
@@ -199,7 +209,7 @@ function Department() {
     }
     function submitEditDepartment(e) {
         e.preventDefault();
-        axios.put("/department/" + departmentID , departmentEdit, { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
+        axios.put("/department/" + departmentID, departmentEdit, { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
             .then((res) => {
                 setDataCreateNew({
                     nameDepartment: "",
@@ -215,7 +225,6 @@ function Department() {
                 alert("Error")
             })
     }
-
 
     return (
         <div className="adminDepertment">
@@ -241,6 +250,22 @@ function Department() {
                 {
                     viewTable()
                 }
+                <div className="phanTrangBtn">
+                    <button onClick={() => {
+                        if (pageStart.start > 1) {
+                            setpageStart({
+                                start: pageStart.start - 1
+                            })
+                        }
+                    }}>Prev</button>
+                    <button onClick={() => {
+                        if (pageStart.start < sumPage.sumPage) {
+                            setpageStart({
+                                start: pageStart.start + 1
+                            })
+                        }
+                    }}>Next</button>
+                </div>
             </div>
             {/* Create New */}
             <div className="modal fade" id="myModal" role="dialog">
@@ -342,33 +367,34 @@ function Department() {
             </div>
 
             {/* Edit Department */}
-            <div className="modal fade" id="editDepartment" role="dialog">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <button type="button" className="close" data-dismiss="modal">&times;</button>
-                            <h4 className="modal-title">Edit</h4>
-                        </div>
-                        <div className="modal-body">
-                            <form onSubmit={(e) => submitEditDepartment(e)}>
-                                <div className="createDepartment">
-                                    <label htmlFor="nameDepartment">Name: </label>
-                                    <input onChange={(e) => handleEditDepartment(e)} id="nameDepartment" value={departmentEdit.nameDepartment} type="text"></input>
-                                </div>
+                <div className="modal fade" id="editDepartment" role="dialog">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <button type="button" className="close" data-dismiss="modal">&times;</button>
+                                <h4 className="modal-title">Edit</h4>
+                            </div>
+                            <div className="modal-body">
+                                <form onSubmit={(e) => submitEditDepartment(e)}>
+                                    <div className="createDepartment">
+                                        <label htmlFor="nameDepartment">Name: </label>
+                                        <input onChange={(e) => handleEditDepartment(e)} id="nameDepartment" value={departmentEdit.nameDepartment} type="text"></input>
+                                    </div>
 
-                                <div className="createDepartment">
-                                    <label htmlFor="officePhone">Office Phone: </label>
-                                    <input onChange={(e) => handleEditDepartment(e)} id="officePhone" value={departmentEdit.officePhone} type="text"></input>
-                                </div>
-                                <div className="createDepartmentBtn">
-                                    <button type="button" className="btn btn-close" data-dismiss="modal">Close</button>
-                                    <button className="btn btn-save">Save</button>
-                                </div>
-                            </form>
+                                    <div className="createDepartment">
+                                        <label htmlFor="officePhone">Office Phone: </label>
+                                        <input onChange={(e) => handleEditDepartment(e)} id="officePhone" value={departmentEdit.officePhone} type="text"></input>
+                                    </div>
+                                    <div className="createDepartmentBtn">
+                                        <button type="button" className="btn btn-close" data-dismiss="modal">Close</button>
+                                        <button className="btn btn-save">Save</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+
         </div>
     );
 }

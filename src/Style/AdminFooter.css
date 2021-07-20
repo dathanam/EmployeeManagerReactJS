@@ -2,6 +2,10 @@
     background-color: rgb(68, 53, 68);
     padding-left: 100px;
     display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 .adminFooterLogo{
     width: 25%;
@@ -10,17 +14,18 @@
     width: 20%;
 }
 .adminFooterLogo img{
-    margin-top: 60px;
+    margin-top: 20px;
     height: 60px;
     margin-left: 100px;
     background-image: none;
+    margin-bottom: 10px;
 }
 .adminFooterTextIcon{
     display: flex;
 }
 .adminFooterIconBtn{
-    margin-top: 60px;
-    margin-left: 50px;
+    margin-top: 20px;
+    margin-left: 200px;
 }
 .adminFooterIconBtn button{
     width: 150px;
@@ -45,6 +50,10 @@
 .adminFooterText_Web{
     text-decoration-line: underline;
     cursor: pointer;
+}
+.adminFooterText{
+    color: white;
+    margin-top: 10px;
 }
 
 /* Mobile Width < 740px */

@@ -24,7 +24,7 @@ function User() {
 
     function viewTable() {
         const checkRole = localStorage.getItem("role")
-        if (checkRole === 0) {
+        if (checkRole === "0") {
             return(
                 <ul className="responsive-table">
                     <li className="table-header">
