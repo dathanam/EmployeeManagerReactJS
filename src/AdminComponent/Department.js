@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import '../Style/AdminDepartment.css';
 import { axios } from '../HeaderAPI';
-import { Modal } from 'bootstrap';
+import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
-function Department() {
+function Department(props) {
 
     // Get Department
     const DataLocalStorage = localStorage.getItem("accessToken");
@@ -150,6 +150,7 @@ function Department() {
     }
 
     ///// Create New
+    
     const [dataCreateNew, setDataCreateNew] = useState({
         nameDepartment: "",
         officePhone: "(+84)",
@@ -226,12 +227,21 @@ function Department() {
             })
     }
 
+    //Toggle
+    const {
+        modalCreate
+    } = props;
+    const [modalCreateNew, setModalCreateNew] = useState(false);
+    const toggleCreateNew = () => setModalCreateNew(!modalCreateNew);
+
     return (
         <div className="adminDepertment">
             <div className="adminDepertmentTable">
                 <div className="adminDepertmentFunction">
                     <div className="adminDepertmentCreateNew">
-                        <button data-toggle="modal" data-target="#myModal">New Department</button>
+                        <button onClick={() =>{
+                            toggleCreateNew()
+                        }}>New Department</button>
                     </div>
                     <div className="adminDepertmentSearch">
                         <button onClick={() => {
@@ -243,6 +253,9 @@ function Department() {
                         <input onChange={(e) => handleSearch(e)} id="search" value={dataSearch.search} type="text" placeholder="name..." className="adminDepertmentSearchInput"></input>
                         <button onClick={() => {
                             submitSearch();
+                            setDataSearch({
+                                search: ""
+                            })
                         }} className="adminDepertmentSearchBtn"><i className="fas fa-search"></i></button>
 
                     </div>
@@ -268,7 +281,29 @@ function Department() {
                 </div>
             </div>
             {/* Create New */}
-            <div className="modal fade" id="myModal" role="dialog">
+            <Modal isOpen={modalCreateNew} toggle={toggleCreateNew} className={modalCreate}>
+                <ModalHeader toggle={toggleCreateNew} charCode="X"></ModalHeader>
+                <ModalBody>
+                    <form onSubmit={(e) => submitCreateNew(e)}>
+                        <div className="createDepartment">
+                            <label htmlFor="name">Name: </label>
+                            <input onChange={(e) => handleCreateNew(e)} id="nameDepartment" value={dataCreateNew.nameDepartment} type="text"></input>
+                        </div>
+
+                        <div className="createDepartment">
+                            <label htmlFor="officePhone">Office Phone: </label>
+                            <input onChange={(e) => handleCreateNew(e)} id="officePhone" value={dataCreateNew.officePhone} type="text"></input>
+                        </div>
+                        <div className="createDepartmentBtn">
+                            <button type="button" className="btn btn-close" onClick={() =>{
+                                toggleCreateNew()
+                            }}>Close</button>
+                            <button className="btn btn-save">Save</button>
+                        </div>
+                    </form>
+                </ModalBody>
+            </Modal>
+            {/* <div className="modal fade" id="myModal" role="dialog">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -294,7 +329,7 @@ function Department() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
             {/* Department Detail */}
             <div className="modal fade" id="detailModail" role="modal">
                 <div className="modal-dialog">
@@ -333,7 +368,7 @@ function Department() {
                             <button type="button" className="close" data-dismiss="modal">&times;</button>
                             <h4 className="modal-title">Employee in {departmentname}</h4>
                         </div>
-                        <div className="modal-body">
+                        <div className="modal-body-EmployeeInDepartment">
                             <ul className="responsive-table">
                                 <li className="table-header">
                                     <div className="col coll-1">id</div>
@@ -349,7 +384,7 @@ function Department() {
                                             <li className="table-row" key={item.id}>
                                                 <div className="col coll-1" data-label="Job Id">{item.id}</div>
                                                 <div className="col coll-3" data-label="Job Id">{item.nameEmployee}</div>
-                                                <div className="col coll-3" data-label="Job Id"><img className="employeeDepartmentImg" src={"http://192.168.20.233:4000/employee/" + item.photo} /></div>
+                                                <div className="col coll-3" data-label="Job Id"><img className="employeeDepartmentImg" src={"http://192.168.20.233:3000/employee/" + item.photo} /></div>
                                                 <div className="col coll-1" data-label="Job Id">{item.jobTitle}</div>
                                                 <div className="col coll-2" data-label="Job Id">{item.cellPhone}</div>
                                                 <div className="col coll-3" data-label="Job Id">{item.email}</div>
@@ -367,33 +402,33 @@ function Department() {
             </div>
 
             {/* Edit Department */}
-                <div className="modal fade" id="editDepartment" role="dialog">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <button type="button" className="close" data-dismiss="modal">&times;</button>
-                                <h4 className="modal-title">Edit</h4>
-                            </div>
-                            <div className="modal-body">
-                                <form onSubmit={(e) => submitEditDepartment(e)}>
-                                    <div className="createDepartment">
-                                        <label htmlFor="nameDepartment">Name: </label>
-                                        <input onChange={(e) => handleEditDepartment(e)} id="nameDepartment" value={departmentEdit.nameDepartment} type="text"></input>
-                                    </div>
+            <div className="modal fade" id="editDepartment" role="dialog">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <button type="button" className="close" data-dismiss="modal">&times;</button>
+                            <h4 className="modal-title">Edit</h4>
+                        </div>
+                        <div className="modal-body">
+                            <form onSubmit={(e) => submitEditDepartment(e)}>
+                                <div className="createDepartment">
+                                    <label htmlFor="nameDepartment">Name: </label>
+                                    <input onChange={(e) => handleEditDepartment(e)} id="nameDepartment" value={departmentEdit.nameDepartment} type="text"></input>
+                                </div>
 
-                                    <div className="createDepartment">
-                                        <label htmlFor="officePhone">Office Phone: </label>
-                                        <input onChange={(e) => handleEditDepartment(e)} id="officePhone" value={departmentEdit.officePhone} type="text"></input>
-                                    </div>
-                                    <div className="createDepartmentBtn">
-                                        <button type="button" className="btn btn-close" data-dismiss="modal">Close</button>
-                                        <button className="btn btn-save">Save</button>
-                                    </div>
-                                </form>
-                            </div>
+                                <div className="createDepartment">
+                                    <label htmlFor="officePhone">Office Phone: </label>
+                                    <input onChange={(e) => handleEditDepartment(e)} id="officePhone" value={departmentEdit.officePhone} type="text"></input>
+                                </div>
+                                <div className="createDepartmentBtn">
+                                    <button type="button" className="btn btn-close" data-dismiss="modal">Close</button>
+                                    <button className="btn btn-save">Save</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
+            </div>
 
         </div>
     );
