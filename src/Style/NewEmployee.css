@@ -1,6 +1,6 @@
 .newEmployee {
     width: 100%;
-    height: 100vh;
+    height: 85vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -51,6 +51,15 @@
     color: black;
     font-weight: bold;
 }
+
+.newEmployeeTextBody select {
+    display: table-cell;
+    margin-left: 20px;
+    margin-top: 20px;
+    color: black;
+    font-weight: bold;
+    width: 195px;
+}
 .newEmployeeButton{
     margin-top: 30px;
     text-align: center;
@@ -73,4 +82,7 @@
     border-radius: 10px;
     width: 250px;
     height: auto;
+}
+.optionInput{
+    color: black;
 }

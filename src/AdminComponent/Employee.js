@@ -16,23 +16,6 @@ function Employee() {
         sumPage: 1,
     });
 
-
-    const [pageStartSearch, setpageStartSearch] = useState({
-        startSearch: 1
-    });
-    const [sumPageSearch, setSumPageSearch] = useState({
-        sumpageSearch: 1
-    });
-    const [pageCheck, setPageCheck] = useState({
-        list: true,
-        search: false
-    });
-    const functionPageCheck = () => setPageCheck({
-        list: !pageCheck.list,
-        search: !pageCheck.search
-    });
-
-
     const getArr = async () => {
         const response = await axios
             .get("/employee/paginate?page=" + pageStart.start + "&limit=5", { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
@@ -53,6 +36,20 @@ function Employee() {
     useEffect(() => {
         getArr();
     }, [pageStart.start]);
+
+    //Get Department
+    const [listDepartment, setListDepartment] = useState([]);
+    const getListDepartment = async () => {
+        const response = await axios
+            .get("/department", { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
+            .catch((err) => console.log("Error: ", err));
+        if (response && response.data) {
+            setListDepartment(response.data)
+        }
+    }
+    useEffect(() => {
+        getListDepartment();
+    }, []);
 
     ////// view table
     function viewTable() {
@@ -76,7 +73,7 @@ function Employee() {
                                     <div className="col col-1">{item.id}</div>
                                     <div className="col col-2">{item.nameEmployee}</div>
                                     <div className="col col-2">
-                                        <img className="employeeDepartmentImg" src={"http://192.168.20.233:3000/employee/" + item.photo} />
+                                        <img className="employeeDepartmentImg" src={"https://nws-management.herokuapp.com/employee/" + item.photo} />
                                     </div>
                                     <div className="col col-1">{item.jobTitle}</div>
                                     <div className="col col-2">{item.cellPhone}</div>
@@ -114,7 +111,7 @@ function Employee() {
                                     <div className="col col-1">{item.id}</div>
                                     <div className="col col-2">{item.nameEmployee}</div>
                                     <div className="col col-2">
-                                        <img className="employeeDepartmentImg" src={"http://192.168.20.233:3000/employee/" + item.photo} />
+                                        <img className="employeeDepartmentImg" src={"https://nws-management.herokuapp.com/employee/" + item.photo} />
                                     </div>
                                     <div className="col col-1">{item.jobTitle}</div>
                                     <div className="col col-2">{item.cellPhone}</div>
@@ -127,13 +124,13 @@ function Employee() {
                                         ><i className="fas fa-eye"></i></button>
 
                                         <button className="nameEmployeeBtn" data-toggle="modal" data-target="#editEmployee"
-                                        onClick={() => {
-                                            setDataEdit(item)
-                                            setObjectURL({
-                                                post: "",
-                                                url: item.photo
-                                            })
-                                        }}
+                                            onClick={() => {
+                                                setDataEdit(item)
+                                                setObjectURL({
+                                                    post: "",
+                                                    url: item.photo
+                                                })
+                                            }}
                                         ><i className="fas fa-edit"></i></button>
 
                                         <i onClick={() => {
@@ -161,25 +158,15 @@ function Employee() {
     })
     const getArrSearch = async () => {
         const response = await axios
-            .get('listEmployee/paginate?page=' + pageStartSearch.startSearch + '&limit=5&nameEmployee=' + dataSearch.search, { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
+            .get('employee/paginate?page=1&limit=5&nameEmployee=' + dataSearch.search, { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
             .catch((err) => console.log("Error: ", err));
         if (response && response.data) {
             setListEmployee(response.data.items)
-            functionPageCheck()
-            // if (response.data.meta.totalItems % 5 != 0) {
-            //     setSumPage({
-            //         sumPage: Math.floor(response.data.meta.totalItems / 5) + 1
-            //     })
-            // } else {
-            //     setSumPage({
-            //         sumPage: Math.floor(response.data.meta.totalItems / 5)
-            //     })
-            // }
         }
     }
     useEffect(() => {
         getArrSearch();
-    }, [pageStartSearch.startSearch]);
+    }, [dataSearch.search]);
 
 
     function handleSearch(e) {
@@ -193,7 +180,6 @@ function Employee() {
         post: "",
         url: ""
     });
-    console.log(objectURL)
     const [dataEdit, setDataEdit] = useState({
         nameEmployee: "",
         photo: "",
@@ -212,19 +198,19 @@ function Employee() {
         formdata.append("cellPhone", dataEdit.cellPhone);
         formdata.append("email", dataEdit.email);
         formdata.append("managerId", dataEdit.managerId);
-        if(objectURL.post !== ""){
+        if (objectURL.post !== "") {
             formdata.append("photo", objectURL.post, "employee.jpg");
-        }      
-        axios.put('/employee/'+dataEdit.id, formdata, { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
+        }
+        axios.put('/employee/' + dataEdit.id, formdata, { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
             .then((res) => {
                 console.log(res)
                 if (res.status === 200) {
                     if (res.data.statusCode === 200) {
-                        alert(res.data.message)
                         getArr()
+                        window.location.reload()
                     }
                 }
-                else{
+                else {
                     alert("Error")
                 }
             })
@@ -237,12 +223,12 @@ function Employee() {
     }
 
     function showImg() {
-        if(objectURL.post === ""){
-            return(
-                <img className="img-fluid" src={"http://192.168.20.233:3000/employee/"+objectURL.url} alt="Cake" width="150" height="150" />
+        if (objectURL.post === "") {
+            return (
+                <img className="img-fluid" src={"https://nws-management.herokuapp.com/employee/" + objectURL.url} alt="Cake" width="150" height="150" />
             )
-        }else{
-            return(
+        } else {
+            return (
                 <img className="img-fluid" src={objectURL.url} alt="Cake" width="150" height="150" />
             )
         }
@@ -258,55 +244,39 @@ function Employee() {
                                 history.push("/admin/newemployee")
                             }}
                         >New Employee</button>
+                        <div>
+                            <button type="button"
+                                onClick={() => {
+                                    setDataSearch({
+                                        search: ""
+                                    })
+                                }}
+                                className="adminEmployeeSearchBtn"><i className="fas fa-reply-all">All</i></button>
+                        </div>
                     </div>
                     <div className="adminEmployeeSearch">
                         <form onSubmit={(e) => getArrSearch(e)}>
                             <input onChange={(e) => handleSearch(e)} id="search" value={dataSearch.search} type="text" placeholder="name..." className="adminEmployeeSearchInput"></input>
-                            <button className="adminEmployeeSearchBtn"><i className="fas fa-search"></i></button>
                         </form>
                     </div>
-                    <button type="button"
-                        onClick={() => {
-                            setPageCheck({
-                                list: true,
-                                search: false
-                            })
-                            functionPageCheck()
-                        }}
-                        className="adminEmployeeSearchBtn"><i className="fas fa-reply-all">All</i></button>
+
                 </div>
                 {
                     viewTable()
                 }
                 <div className="phanTrangBtn">
                     <button onClick={() => {
-                        if (pageCheck.list) {
-                            if (pageStart.start > 1) {
-                                setpageStart({
-                                    start: pageStart.start - 1,
-                                })
-                            }
-                        } else {
-                            if (pageStart.startSearch > 1) {
-                                setpageStartSearch({
-                                    startSearch: pageStart.startSearch - 1
-                                })
-                            }
+                        if (pageStart.start > 1) {
+                            setpageStart({
+                                start: pageStart.start - 1
+                            })
                         }
                     }}>Prev</button>
                     <button onClick={() => {
-                        if (pageCheck.list) {
-                            if (pageStart.start < sumPage.sumPage) {
-                                setpageStart({
-                                    start: pageStart.start + 1,
-                                })
-                            }
-                        } else {
-                            if (pageStartSearch.start < sumPageSearch.sumpageSearch) {
-                                setpageStartSearch({
-                                    startSearch: pageStart.startSearch + 1
-                                })
-                            }
+                        if (pageStart.start < sumPage.sumPage) {
+                            setpageStart({
+                                start: pageStart.start + 1
+                            })
                         }
                     }}>Next</button>
                 </div>
@@ -322,7 +292,7 @@ function Employee() {
                         </div>
                         <div className="modal-body">
                             <div className="modalEmployeeImg">
-                                <img className="employeeDepartmentImgDetail" src={"http://192.168.20.233:3000/employee/" + oneEmployee.photo} />
+                                <img className="employeeDepartmentImgDetail" src={"https://nws-management.herokuapp.com/employee/" + oneEmployee.photo} />
                             </div>
                             <div className="modalEmployBody">
                                 <div className="loginInputDev">
@@ -376,23 +346,31 @@ function Employee() {
                                         <div className="newEmployeeTextBody">
                                             <div className="newEmployeeDev">
                                                 <label htmlFor="nameEmployee">Name:</label>
-                                                <input onChange={(e) => handleEditEmployee(e)} id="nameEmployee" value={dataEdit.nameEmployee} type="text" required/>
+                                                <input onChange={(e) => handleEditEmployee(e)} id="nameEmployee" value={dataEdit.nameEmployee} type="text" required />
                                             </div>
                                             <div className="newEmployeeDev">
                                                 <label htmlFor="jobTitle">Job Title:</label>
-                                                <input onChange={(e) => handleEditEmployee(e)} id="jobTitle" value={dataEdit.jobTitle} type="text" required/>
+                                                <input onChange={(e) => handleEditEmployee(e)} id="jobTitle" value={dataEdit.jobTitle} type="text" required />
                                             </div>
                                             <div className="newEmployeeDev">
                                                 <label htmlFor="cellPhone">Phone:</label>
-                                                <input onChange={(e) => handleEditEmployee(e)} id="cellPhone" value={dataEdit.cellPhone} type="text" required/>
+                                                <input onChange={(e) => handleEditEmployee(e)} id="cellPhone" value={dataEdit.cellPhone} type="text" required />
                                             </div>
                                             <div className="newEmployeeDev">
                                                 <label htmlFor="email">Email:</label>
-                                                <input onChange={(e) => handleEditEmployee(e)} id="email" value={dataEdit.email} type="text" required/>
+                                                <input onChange={(e) => handleEditEmployee(e)} id="email" value={dataEdit.email} type="text" required />
                                             </div>
                                             <div className="newEmployeeDev">
                                                 <label htmlFor="managerId">Manager Id:</label>
-                                                <input onChange={(e) => handleEditEmployee(e)} id="managerId" value={dataEdit.managerId} type="number" required/>
+                                                <select onChange={(e) => handleEditEmployee(e)} id="managerId" value={dataEdit.managerId} required>
+                                                    {
+                                                        listDepartment.map((item) => {
+                                                            return (
+                                                                <option className="optionInput" value={item.id}>{item.nameDepartment}</option>
+                                                            )
+                                                        })
+                                                    }
+                                                </select>
                                             </div>
                                             <div className="newEmployeeButton">
                                                 <button type="button" data-dismiss="modal">Cancel</button>

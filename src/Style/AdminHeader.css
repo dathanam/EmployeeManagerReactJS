@@ -87,6 +87,12 @@ Link:hover{
 .fa-user{
     margin-top: 14px;
 }
+.loggoutBtn{
+    background: none;
+    border: none;
+    color: white;
+    margin-left: 5px;
+}
 
 
 /* Mobile Width < 740px */
@@ -100,6 +106,7 @@ Link:hover{
         float: right;
         cursor: pointer;
         position: absolute;
+        color: white;
     }
     .adminListNavbar-Mobile{
         display: block !important;
@@ -143,13 +150,19 @@ Link:hover{
     }
     .navMobileUsername{
         display: block;
-        margin-top: -26px;
+        margin-top: -13px;
         text-transform: uppercase;
         position: absolute;
         right: 70px;
     }
     .navMobileUsername i{
-        color: rgb(221, 243, 24);
+        color: rgb(255, 255, 255);
+    }
+    .navMobileUsername h4{
+        color: white;
+    }
+    .loggoutBtn{
+        margin-left: -6px;
     }
 }
 

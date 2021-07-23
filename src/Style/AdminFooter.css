@@ -1,4 +1,4 @@
-.adminFooter{
+.adminFooter {
     background-color: rgb(68, 53, 68);
     padding-left: 100px;
     display: flex;
@@ -6,28 +6,29 @@
     left: 0;
     right: 0;
     bottom: 0;
+    text-align: center;
 }
-.adminFooterLogo{
+.adminFooterLogo {
     width: 25%;
 }
-.adminFooterIcon{
+.adminFooterIcon {
     width: 20%;
 }
-.adminFooterLogo img{
+.adminFooterLogo img {
     margin-top: 20px;
     height: 60px;
     margin-left: 100px;
     background-image: none;
     margin-bottom: 10px;
 }
-.adminFooterTextIcon{
+.adminFooterTextIcon {
     display: flex;
 }
-.adminFooterIconBtn{
+.adminFooterIconBtn {
     margin-top: 20px;
     margin-left: 200px;
 }
-.adminFooterIconBtn button{
+.adminFooterIconBtn button {
     width: 150px;
     height: 40px;
     border-radius: 20px;
@@ -36,7 +37,7 @@
     border-color: red;
     cursor: pointer;
 }
-.adminFooterIconBtn button:hover{
+.adminFooterIconBtn button:hover {
     width: 150px;
     height: 40px;
     border-radius: 20px;
@@ -44,52 +45,25 @@
     background-color: rgb(141, 238, 162);
     border-color: red;
 }
-.adminFooter-Mobile{
+.adminFooter-Mobile {
     display: none;
 }
-.adminFooterText_Web{
+.adminFooterText_Web {
     text-decoration-line: underline;
     cursor: pointer;
 }
-.adminFooterText{
+.adminFooterText {
     color: white;
     margin-top: 10px;
 }
 
 /* Mobile Width < 740px */
-@media only screen and  (max-width: 739px){
-    .adminFooter{
-        display: none;
-    }
-    .adminFooter-Mobile{
+@media only screen and (max-width: 739px) {
+    .adminFooter {
         display: block;
-        background-color: rgb(68, 53, 68);
         text-align: center;
     }
-    .adminFooterLogo-Mobile img{
-        margin-top: 10px;
-        height: 60px;
-        background-image: none;
-    }
-    .adminFooterIconBtn-Mobile button{
-        width: 150px;
-        height: 40px;
-        border-radius: 20px;
-        color: white;
-        background-color: rgb(229, 118, 233);
-        border-color: red;
-        cursor: pointer;
-    }
-    .adminFooterIconBtn-Mobile button:hover{
-        width: 150px;
-        height: 40px;
-        border-radius: 20px;
-        color: rgb(238, 11, 11);
-        background-color: rgb(245, 239, 245);
-        border-color: red;
-    }
-    .adminFooterText-Mobile_Web{
-        cursor: pointer;
-        text-decoration-line: underline;
+    .adminFooterIconBtn{
+        margin-left: 100px;
     }
 }

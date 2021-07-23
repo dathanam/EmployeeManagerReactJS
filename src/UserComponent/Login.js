@@ -9,9 +9,9 @@ function Login(props) {
     const history = useHistory();
     function checkFristLogin() {
         const UserLoginFrist = localStorage.getItem("loginFrist");
-        console.log(UserLoginFrist)
         if (UserLoginFrist === "true") {
             history.push("/admin")
+            window.location.reload()
         } else {
             history.push("/changepassword")
         }
@@ -31,6 +31,7 @@ function Login(props) {
                 localStorage.setItem("email", decode.email);
                 localStorage.setItem("role", decode.role);
                 localStorage.setItem("loginFrist", decode.loginFrist);
+                localStorage.setItem("time", 3600);
                 checkFristLogin();
             })
             .catch(err => {
@@ -58,11 +59,11 @@ function Login(props) {
                     <form className="loginForm" onSubmit={(e) => submit(e)}>
                         <div className="loginInputDev">
                             <label htmlFor="username">User Name:</label>
-                            <input onChange={(e) => handle(e)} id="username" value={dataLogin.username} type="text" />
+                            <input onChange={(e) => handle(e)} id="username" value={dataLogin.username} type="text" required />
                         </div>
                         <div className="loginInputDev">
                             <label htmlFor="password">Password:</label>
-                            <input onChange={(e) => handle(e)} id="password" value={dataLogin.password} type="text" />
+                            <input onChange={(e) => handle(e)} id="password" value={dataLogin.password} type="text" required/>
                         </div>
                         <div className="loginInputDevBtn">
                             <button type="button">

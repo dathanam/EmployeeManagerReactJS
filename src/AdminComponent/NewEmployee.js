@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../Style/NewEmployee.css'
 import { useHistory } from "react-router-dom";
 import { axios } from '../HeaderAPI';
@@ -29,7 +29,7 @@ function NewEmployee() {
         formdata.append("cellPhone", dataCreateEmployee.cellPhone);
         formdata.append("email", dataCreateEmployee.email);
         formdata.append("managerId", dataCreateEmployee.managerId);
-        formdata.append("photo", objectURL.post, "employee.jpg");    
+        formdata.append("photo", objectURL.post, "employee.jpg");
         axios.post('/employee', formdata, { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
             .then((res) => {
                 console.log(res)
@@ -58,6 +58,20 @@ function NewEmployee() {
         newdata[e.target.id] = e.target.value;
         setDataCreateEmployee(newdata);
     }
+
+    //Get Department
+    const [listDepartment, setListDepartment] = useState([]);
+    const getListDepartment = async () => {
+        const response = await axios
+            .get("/department", { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
+            .catch((err) => console.log("Error: ", err));
+        if (response && response.data) {
+            setListDepartment(response.data)
+        }
+    }
+    useEffect(() => {
+        getListDepartment();
+    }, []);
     return (
         <div className="newEmployee">
             <form className="newEmployeeForm" onSubmit={(e) => submit(e)}>
@@ -91,8 +105,16 @@ function NewEmployee() {
                                 <input onChange={(e) => handle(e)} id="email" value={dataCreateEmployee.email} type="text" />
                             </div>
                             <div className="newEmployeeDev">
-                                <label htmlFor="managerId">Manager Id:</label>
-                                <input onChange={(e) => handle(e)} id="managerId" value={dataCreateEmployee.managerId} type="number" />
+                                <label htmlFor="managerId">Department:</label>
+                                <select onChange={(e) => handle(e)} id="managerId" value={dataCreateEmployee.managerId}>
+                                    {
+                                        listDepartment.map((item) => {
+                                            return (
+                                                <option className="optionInput" value={item.id}>{item.nameDepartment}</option>
+                                            )                                        
+                                    })
+                                    }
+                                </select>
                             </div>
                             <div className="newEmployeeButton">
                                 <button type="button">Cancel</button>

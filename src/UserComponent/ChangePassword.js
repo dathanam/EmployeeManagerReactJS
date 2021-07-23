@@ -16,7 +16,7 @@ function ChangePassword() {
         axios.put("/user/auth/changePassword", changePassword)
             .then((res) => {
                 alert("Thay đổi mật khẩu thành công!")
-                history.push("/admin")
+                history.push("/login")
             })
             .catch(err => {
                 setDataChangePassword({

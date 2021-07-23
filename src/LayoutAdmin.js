@@ -6,7 +6,7 @@ import Footer from './AdminComponent/Footer';
 import Department from './AdminComponent/Department';
 import Employee from './AdminComponent/Employee';
 import NewEmployee from './AdminComponent/NewEmployee';
-import Test from './AdminComponent/Test';
+import SignUp from './AdminComponent/SignUp';
 
 function LayoutAdmin() {
     return (
@@ -18,9 +18,9 @@ function LayoutAdmin() {
                     <Route path="/admin/department" component={Department} />
                     <Route path="/admin/employee" component={Employee} />
                     <Route path="/admin/newemployee" component={NewEmployee} />
-                    <Route path="/admin/test" component={Test} />
+                    <Route path="/admin/signup" component={SignUp} />
                 </Switch>
-                <Footer />
+                {/* <Footer /> */}
             </Router>
         </div>
     );

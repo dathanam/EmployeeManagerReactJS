@@ -114,5 +114,9 @@
 }
 /* Mobile Width < 740px */
 @media only screen and  (max-width: 739px){
-
+    .adminEmployeeTable {
+        padding: 10px;
+        margin-left: 0;
+        margin-right: 0;
+    }
 }

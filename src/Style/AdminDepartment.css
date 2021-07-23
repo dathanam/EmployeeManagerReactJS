@@ -1,37 +1,37 @@
-.adminDepertmentTable{
+.adminDepertmentTable {
     font-size: 16px;
     margin-left: 200px;
     margin-right: 200px;
 }
-.adminDepertmentFunction{
+.adminDepertmentFunction {
     margin-bottom: 10px;
     margin-top: 70px;
     text-align: right;
 }
-.adminDepertmentCreateNew button{
+.adminDepertmentCreateNew button {
     margin-left: 40px;
     font-size: 16px;
     float: left;
     box-shadow: 0px 0px 5px 0px rgba(250, 0, 0, 0.1);
 }
-.adminDepertmentSearch input{
+.adminDepertmentSearch input {
     font-size: 16px;
     width: 150px;
     box-shadow: 0px 0px 5px 0px rgba(250, 0, 0, 0.1);
 }
-.adminDepertmentSearch button{
+.adminDepertmentSearch button {
     font-size: 16px;
 }
-.modal-body-EmployeeInDepartment{
+.modal-body-EmployeeInDepartment {
     display: block;
 }
 
 /* Create New */
-.modal-dialog{
+.modal-dialog {
     width: 400px;
     text-align: center;
 }
-.modal-dialog-employee{
+.modal-dialog-employee {
     text-align: center;
     position: fixed;
     top: 0;
@@ -40,62 +40,67 @@
     padding-left: 200px;
     padding-right: 200px;
 }
-.modal-title{
+.modal-title {
     text-transform: uppercase;
 }
-.close{
+.close {
     color: white;
     opacity: 0.8;
 }
-.modal-content{
+.modal-content {
     color: white;
     background-color: rgb(68, 53, 68);
 }
-.createDepartment{
+.createDepartment {
     text-align: left;
     display: table-row;
 }
-.createDepartment label{
+.createDepartment label {
     text-transform: uppercase;
     width: 50%;
     padding-left: 20px;
     display: table-cell;
 }
-.createDepartment input{
+.createDepartment input {
     display: table-cell;
     margin-bottom: 15px;
     color: black;
 }
-.createDepartmentBtn{
+.createDepartmentBtn {
     margin-top: 10px;
     margin-bottom: 10px;
 }
-.btn-close{
+.btn-close {
     background-color: white;
     margin-right: 10px;
     color: tomato;
     text-transform: uppercase;
     font-weight: bold;
 }
-.btn-save{
+.btn-save {
     margin-left: 10px;
     color: tomato;
     text-transform: uppercase;
     font-weight: bold;
 }
-.nameDepartmentBtn{
+.nameDepartmentBtn {
     background: none;
     border: none;
 }
-.employeeDepartmentImg{
+.employeeDepartmentImg {
     width: 50px;
 }
 /* Phân Trang */
-.phanTrangBtn{
+.phanTrangBtn {
     text-align: center;
-    padding: 40px;
+    padding: 5px;
 }
 /* Mobile Width < 740px */
-@media only screen and  (max-width: 739px){
-
+@media only screen and (max-width: 739px) {
+    .adminDepertmentTable {
+        font-size: 16px;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 10px;
+    }
 }

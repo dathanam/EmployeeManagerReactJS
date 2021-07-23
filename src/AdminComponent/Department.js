@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../Style/AdminDepartment.css';
 import { axios } from '../HeaderAPI';
-import { Modal, ModalHeader, ModalBody } from 'reactstrap';
-
-function Department(props) {
+function Department() {
 
     // Get Department
     const DataLocalStorage = localStorage.getItem("accessToken");
@@ -77,7 +75,7 @@ function Department(props) {
                         <div className="col col-1">id</div>
                         <div className="col col-3">Department Name</div>
                         <div className="col col-2">Office Phone</div>
-                        <div className="col col-1">action</div>
+                        <div className="col col-2">action</div>
                     </li>
                     {
                         department.map((item) => {
@@ -92,7 +90,7 @@ function Department(props) {
                                         >{item.nameDepartment}</button>
                                     </div>
                                     <div className="col col-2" data-label="Amount">{item.officePhone}</div>
-                                    <div className="col col-1" data-label="Payment Status">
+                                    <div className="col col-2" data-label="Payment Status">
 
                                         <button className="nameDepartmentBtn" data-toggle="modal" data-target="#modalEmployeeDepartment"
                                             onClick={() => {
@@ -143,6 +141,10 @@ function Department(props) {
         }
     }
 
+    useEffect(() => {
+        submitSearch();
+    }, [dataSearch.search]);
+
     function handleSearch(e) {
         const newdata = { ...dataSearch };
         newdata[e.target.id] = e.target.value;
@@ -150,7 +152,7 @@ function Department(props) {
     }
 
     ///// Create New
-    
+
     const [dataCreateNew, setDataCreateNew] = useState({
         nameDepartment: "",
         officePhone: "(+84)",
@@ -165,6 +167,7 @@ function Department(props) {
                     officePhone: "",
                 })
                 getArr();
+                window.location.reload();
             })
             .catch(err => {
                 setDataCreateNew({
@@ -191,6 +194,7 @@ function Department(props) {
             .get(`/department/managerId/` + id, { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
             .catch((err) => console.log("Error: ", err));
         if (response && response.data) {
+            console.log(response)
             setListEmployeeDepartment(response.data)
         }
     }
@@ -217,6 +221,7 @@ function Department(props) {
                     officePhone: "",
                 })
                 getArr()
+                window.location.reload()
             })
             .catch(err => {
                 setDataCreateNew({
@@ -226,22 +231,12 @@ function Department(props) {
                 alert("Error")
             })
     }
-
-    //Toggle
-    const {
-        modalCreate
-    } = props;
-    const [modalCreateNew, setModalCreateNew] = useState(false);
-    const toggleCreateNew = () => setModalCreateNew(!modalCreateNew);
-
     return (
         <div className="adminDepertment">
             <div className="adminDepertmentTable">
                 <div className="adminDepertmentFunction">
                     <div className="adminDepertmentCreateNew">
-                        <button onClick={() =>{
-                            toggleCreateNew()
-                        }}>New Department</button>
+                        <button data-toggle="modal" data-target="#myModal" >New Department</button>
                     </div>
                     <div className="adminDepertmentSearch">
                         <button onClick={() => {
@@ -251,12 +246,12 @@ function Department(props) {
                             getArr();
                         }} className="adminDepertmentSearchBtn"><i className="fas fa-reply-all">All</i></button>
                         <input onChange={(e) => handleSearch(e)} id="search" value={dataSearch.search} type="text" placeholder="name..." className="adminDepertmentSearchInput"></input>
-                        <button onClick={() => {
+                        {/* <button onClick={() => {
                             submitSearch();
                             setDataSearch({
                                 search: ""
                             })
-                        }} className="adminDepertmentSearchBtn"><i className="fas fa-search"></i></button>
+                        }} className="adminDepertmentSearchBtn"><i className="fas fa-search"></i></button> */}
 
                     </div>
                 </div>
@@ -281,29 +276,7 @@ function Department(props) {
                 </div>
             </div>
             {/* Create New */}
-            <Modal isOpen={modalCreateNew} toggle={toggleCreateNew} className={modalCreate}>
-                <ModalHeader toggle={toggleCreateNew} charCode="X"></ModalHeader>
-                <ModalBody>
-                    <form onSubmit={(e) => submitCreateNew(e)}>
-                        <div className="createDepartment">
-                            <label htmlFor="name">Name: </label>
-                            <input onChange={(e) => handleCreateNew(e)} id="nameDepartment" value={dataCreateNew.nameDepartment} type="text"></input>
-                        </div>
-
-                        <div className="createDepartment">
-                            <label htmlFor="officePhone">Office Phone: </label>
-                            <input onChange={(e) => handleCreateNew(e)} id="officePhone" value={dataCreateNew.officePhone} type="text"></input>
-                        </div>
-                        <div className="createDepartmentBtn">
-                            <button type="button" className="btn btn-close" onClick={() =>{
-                                toggleCreateNew()
-                            }}>Close</button>
-                            <button className="btn btn-save">Save</button>
-                        </div>
-                    </form>
-                </ModalBody>
-            </Modal>
-            {/* <div className="modal fade" id="myModal" role="dialog">
+            <div className="modal fade" id="myModal" role="dialog">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -329,7 +302,7 @@ function Department(props) {
                         </div>
                     </div>
                 </div>
-            </div> */}
+            </div>
             {/* Department Detail */}
             <div className="modal fade" id="detailModail" role="modal">
                 <div className="modal-dialog">
@@ -384,7 +357,7 @@ function Department(props) {
                                             <li className="table-row" key={item.id}>
                                                 <div className="col coll-1" data-label="Job Id">{item.id}</div>
                                                 <div className="col coll-3" data-label="Job Id">{item.nameEmployee}</div>
-                                                <div className="col coll-3" data-label="Job Id"><img className="employeeDepartmentImg" src={"http://192.168.20.233:3000/employee/" + item.photo} /></div>
+                                                <div className="col coll-3" data-label="Job Id"><img className="employeeDepartmentImg" src={"https://nws-management.herokuapp.com/employee/" + item.photo} /></div>
                                                 <div className="col coll-1" data-label="Job Id">{item.jobTitle}</div>
                                                 <div className="col coll-2" data-label="Job Id">{item.cellPhone}</div>
                                                 <div className="col coll-3" data-label="Job Id">{item.email}</div>

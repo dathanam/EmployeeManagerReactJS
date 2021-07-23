@@ -56,5 +56,12 @@
 
 /* Mobile Width < 740px */
 @media only screen and (max-width: 739px) {
-    
+    .adminUserTable{
+        padding: 0;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .responsive-table{
+        padding: 0;
+    }
 }

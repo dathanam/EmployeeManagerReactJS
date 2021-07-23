@@ -53,8 +53,8 @@ function User() {
                 <ul className="responsive-table">
                     <li className="table-header">
                         <div className="col col-1">id</div>
-                        <div className="col col-3">User Name</div>
-                        <div className="col col-2">role</div>
+                        <div className="col col-2">User Name</div>
+                        <div className="col col-1">role</div>
                         <div className="col col-4">email</div>
                         <div className="col col-1">action</div>
                     </li>
@@ -63,8 +63,8 @@ function User() {
                             return (
                                 <li className="table-row">
                                     <div className="col col-1" data-label="Job Id">{item.id}</div>
-                                    <div className="col col-3" data-label="Customer Name">{item.username}</div>
-                                    <div className="col col-2" data-label="Amount">{item.role}</div>
+                                    <div className="col col-2" data-label="Customer Name">{item.username}</div>
+                                    <div className="col col-1" data-label="Amount">{item.role}</div>
                                     <div className="col col-4" data-label="Payment Status">{item.email}</div>
                                     <div className="col col-1" data-label="Payment Status">
                                         <i onClick={() => {
