@@ -12,6 +12,8 @@ function NewEmployee() {
         url: ""
     });
 
+    console.log(objectURL)
+
     // create
     const [dataCreateEmployee, setDataCreateEmployee] = useState({
         nameEmployee: "",

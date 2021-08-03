@@ -23,7 +23,7 @@ function Department() {
         if (response && response.data) {
             setListDepartment(response.data.items)
             setDepartment(response.data.items)
-            if (response.data.meta.totalItems % 5 != 0) {
+            if (response.data.meta.totalItems % 5 !== 0) {
                 setSumPage({
                     sumPage: Math.floor(response.data.meta.totalItems / 5) + 1
                 })
@@ -45,9 +45,10 @@ function Department() {
             return (
                 <ul className="responsive-table">
                     <li className="table-header">
-                        <div className="col col-1">i</div>
+                        <div className="col col-1">id</div>
                         <div className="col col-3">Department Name</div>
                         <div className="col col-2">Office Phone</div>
+                        <div className="col col-2">action</div>
                     </li>
                     {
                         department.map((item) => {
@@ -62,6 +63,15 @@ function Department() {
                                         >{item.nameDepartment}</button>
                                     </div>
                                     <div className="col col-2" data-label="Amount">{item.officePhone}</div>
+                                    <div className="col col-2" data-label="Payment Status">
+
+                                        <button className="nameDepartmentBtn" data-toggle="modal" data-target="#modalEmployeeDepartment"
+                                            onClick={() => {
+                                                setDepartmentname(item.nameDepartment)
+                                                getlistEmployeeDepartment(item.id);
+                                            }}
+                                        ><i className="fas fa-eye"></i></button>
+                                    </div>
                                 </li>
                             )
                         })

@@ -22,7 +22,7 @@ function Employee() {
             .catch((err) => console.log("Error: ", err));
         if (response && response.data) {
             setListEmployee(response.data.items)
-            if (response.data.meta.totalItems % 5 != 0) {
+            if (response.data.meta.totalItems % 5 !== 0) {
                 setSumPage({
                     sumPage: Math.floor(response.data.meta.totalItems / 5) + 1,
                 })

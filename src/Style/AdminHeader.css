@@ -93,8 +93,17 @@ Link:hover{
     color: white;
     margin-left: 5px;
 }
-
-
+.UserDropdown button {
+    color: WHITE;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-top: 5px;
+    margin-left: -40px;
+    font-size: 17px;
+}
+.changePasswordInputUser{
+    margin-left: 0px;
+}
 /* Mobile Width < 740px */
 @media only screen and  (max-width: 739px){
     .adminListNavbar{

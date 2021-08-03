@@ -63,12 +63,9 @@ function Login(props) {
                         </div>
                         <div className="loginInputDev">
                             <label htmlFor="password">Password:</label>
-                            <input onChange={(e) => handle(e)} id="password" value={dataLogin.password} type="text" required/>
+                            <input onChange={(e) => handle(e)} id="password" value={dataLogin.password} type="password" required/>
                         </div>
                         <div className="loginInputDevBtn">
-                            <button type="button">
-                                <Link to="/signup" className="nav-link">SIGN UP</Link>
-                            </button>
                             <button>LOGIN</button>
                         </div>
                     </form>

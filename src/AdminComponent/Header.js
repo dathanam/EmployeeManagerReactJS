@@ -3,6 +3,11 @@ import '../Style/AdminHeader.css'
 import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode"
 import { useHistory } from 'react-router-dom';
+import { axios } from '../HeaderAPI';
+
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 function Header() {
     const history = useHistory();
@@ -12,12 +17,12 @@ function Header() {
         if (DataLocalStorage != null) {
             const decode = jwt_decode(DataLocalStorage);
             return (
-                <h4><i className="far fa-user"></i> {decode.username}</h4>
+                <p><i className="far fa-user"></i> {decode.username}</p>
             )
         }
         else {
             return (
-                <h4><i className="far fa-user"></i> No User</h4>
+                <p><i className="far fa-user"></i> No User</p>
             )
         }
     }
@@ -46,11 +51,72 @@ function Header() {
 
     localStorage.setItem("time", num);
 
-    if(num === 60){
+    if (num === 60) {
         alert("Thời gian còn lại là 1 phút. Vui lòng lưu lại toàn bộ thông tin trong phiên đăng nhập")
-    }else if(num === 0){
-        alert("Hết phiên đăng nhập")      
+    } else if (num === 0) {
+        alert("Hết phiên đăng nhập")
         Logout();
+    }
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const [changePass, setChangePass] = React.useState(null);
+
+    const handleClickChangePass = (event) => {
+        setChangePass(event.currentTarget);
+    };
+
+    const handleCloseChangePass = () => {
+        setChangePass(null);
+    };
+
+    const [changePassword, setDataChangePassword] = useState({
+        username: localStorage.getItem("username"),
+        oldPass: "",
+        newPass: "",
+        confirm: ""
+    })
+    function submitChangePass(e) {
+        e.preventDefault();
+        axios.put("/user/auth/changePassword", changePassword)
+            .then((res) => {
+                alert("Thay đổi mật khẩu thành công!");
+                handleClose();
+                handleCloseChangePass();
+            })
+            .catch(err => {
+                setDataChangePassword({
+                    username: localStorage.getItem("username"),
+                    oldPass: "",
+                    newPass: "",
+                    confirm: ""
+                })
+                alert("Error")
+            })
+    }
+
+    function handleChangePass(e) {
+        const newdata = { ...changePassword };
+        newdata[e.target.id] = e.target.value;
+        setDataChangePassword(newdata);
+    }
+    function linkSignUp() {
+        const checkRole = localStorage.getItem("role")
+        if (checkRole === "0") {
+            return
+        } else {
+            return (
+                <Link to="/admin/signup" className="nav-link">SignUp</Link>
+            )
+        }
     }
 
     return (
@@ -87,7 +153,7 @@ function Header() {
                     </li>
                     <li>
                         <i className="fas fa-sign-in-alt"></i>
-                        <button className="loggoutBtn" onClick={() =>{Logout()}}>
+                        <button className="loggoutBtn" onClick={() => { Logout() }}>
                             LOGOUT
                         </button>
                     </li>
@@ -106,18 +172,67 @@ function Header() {
                         <Link to="/admin/employee" className="nav-link">Employee</Link>
                     </li>
                     <li>
-                        <Link to="/admin/signup" className="nav-link">SignUp</Link>
+                        {
+                            linkSignUp()
+                        }
                     </li>
                     <div className="AdminLog">
-                        {viewNameUser()}
+                        <div className="UserDropdown">
+                            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                                {viewNameUser()}
+                            </Button>
+                            <Menu
+                                id="simple-menu"
+                                anchorEl={anchorEl}
+                                keepMounted
+                                open={Boolean(anchorEl)}
+                                onClose={handleClose}
+                            >
+                                <MenuItem aria-controls="changePass-menu" onClick={handleClickChangePass}>Change Password</MenuItem>
+                                <MenuItem onClick={() => {
+                                    handleClose();
+                                    Logout()
+                                }}>Logout</MenuItem>
+                            </Menu>
+                            <Menu
+                                id="changePass-menu"
+                                anchorEl={changePass}
+                                keepMounted
+                                open={Boolean(changePass)}
+                                onClose={handleCloseChangePass}
+                            >
+                                <MenuItem>
+                                    <div className="changePasswordInputUser">
+                                        <form className="changePasswordForm" onSubmit={(e) => submitChangePass(e)}>
+                                            <div className="changePasswordInputDev">
+                                                <label htmlFor="username">User Name:</label>
+                                                <input value={changePassword.username} type="text" />
+                                            </div>
+                                            <div className="changePasswordInputDev">
+                                                <label htmlFor="password">Old Pass:</label>
+                                                <input onChange={(e) => handleChangePass(e)} id="oldPass" value={changePassword.oldPass} type="password" />
+                                            </div>
+                                            <div className="changePasswordInputDev">
+                                                <label htmlFor="password">New Pass:</label>
+                                                <input onChange={(e) => handleChangePass(e)} id="newPass" value={changePassword.newPass} type="password" />
+                                            </div>
+                                            <div className="changePasswordInputDev">
+                                                <label htmlFor="password">Confirm:</label>
+                                                <input onChange={(e) => handleChangePass(e)} id="confirm" value={changePassword.confirm} type="password" />
+                                            </div>
+                                            <div className="changePasswordInputDevBtn">
+                                                <button type="button" onClick={() => {
+                                                    handleClose();
+                                                    handleCloseChangePass();
+                                                }}>CANCEL</button>
+                                                <button>SAVE</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </MenuItem>
+                            </Menu>
+                        </div>
                     </div>
-                    <li>
-                        <button className="loggoutBtn" onClick={() =>{Logout()}}>
-                            <i class="fas fa-sign-out-alt"></i>
-                        </button>
-
-                    </li>
-
                 </ul>
 
             </div>

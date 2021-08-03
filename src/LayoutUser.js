@@ -15,7 +15,7 @@ function LayoutUser() {
                 <Route path="/login" component={Login} />
                 <Route path="/changepassword" component={ChangePassword} />
             </Switch>
-            <Footer />
+            {/* <Footer /> */}
         </Router>
     );
 }

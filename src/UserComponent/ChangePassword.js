@@ -6,7 +6,7 @@ import { axios } from '../HeaderAPI';
 function ChangePassword() {
     const history = useHistory();
     const [changePassword, setDataChangePassword] = useState({
-        username: "",
+        username: localStorage.getItem("username"),
         oldPass: "",
         newPass: "",
         confirm: ""
@@ -44,19 +44,19 @@ function ChangePassword() {
                     <form className="changePasswordForm" onSubmit={(e) => submitChangePass(e)}>
                         <div className="changePasswordInputDev">
                             <label htmlFor="username">User Name:</label>
-                            <input onChange={(e) => handleChangePass(e)} id="username" value={changePassword.username} type="text" />
+                            <input value={changePassword.username} type="text" />
                         </div>
                         <div className="changePasswordInputDev">
                             <label htmlFor="password">Old Pass:</label>
-                            <input onChange={(e) => handleChangePass(e)} id="oldPass" value={changePassword.oldPass} type="text" />
+                            <input onChange={(e) => handleChangePass(e)} id="oldPass" value={changePassword.oldPass} type="password" />
                         </div>
                         <div className="changePasswordInputDev">
                             <label htmlFor="password">New Pass:</label>
-                            <input onChange={(e) => handleChangePass(e)} id="newPass" value={changePassword.newPass} type="text" />
+                            <input onChange={(e) => handleChangePass(e)} id="newPass" value={changePassword.newPass} type="password" />
                         </div>
                         <div className="changePasswordInputDev">
                             <label htmlFor="password">Confirm:</label>
-                            <input onChange={(e) => handleChangePass(e)} id="confirm" value={changePassword.confirm} type="text" />
+                            <input onChange={(e) => handleChangePass(e)} id="confirm" value={changePassword.confirm} type="password" />
                         </div>
                         <div className="changePasswordInputDevBtn">
                             <button>SAVE</button>
