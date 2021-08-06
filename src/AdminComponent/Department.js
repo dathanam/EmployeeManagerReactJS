@@ -56,10 +56,10 @@ function Department() {
                                 <li className="table-row" key={item.id}>
                                     <div className="col col-1" data-label="Job Id">{item.id}</div>
                                     <div className="col col-3" data-label="Customer Name">
-                                        <button className="nameDepartmentBtn" data-toggle="modal" data-target="#detailModail"
-                                            onClick={() => {
-                                                setOneDepartment(item)
-                                            }}
+                                        <button className="nameDepartmentBtn"
+                                            // onClick={() => {
+                                            //     setOneDepartment(item)
+                                            // }}
                                         >{item.nameDepartment}</button>
                                     </div>
                                     <div className="col col-2" data-label="Amount">{item.officePhone}</div>
@@ -93,10 +93,10 @@ function Department() {
                                 <li className="table-row" key={item.id}>
                                     <div className="col col-1" data-label="Job Id">{item.id}</div>
                                     <div className="col col-3" data-label="Customer Name">
-                                        <button className="nameDepartmentBtn" data-toggle="modal" data-target="#detailModail"
-                                            onClick={() => {
-                                                setOneDepartment(item)
-                                            }}
+                                        <button className="nameDepartmentBtn"
+                                            // onClick={() => {
+                                            //     setOneDepartment(item)
+                                            // }}
                                         >{item.nameDepartment}</button>
                                     </div>
                                     <div className="col col-2" data-label="Amount">{item.officePhone}</div>

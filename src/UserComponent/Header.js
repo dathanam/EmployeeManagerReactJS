@@ -11,6 +11,7 @@ function Header() {
     let checkkIsLogin = () => {
         if (userExists !== null) {
             history.push("/admin")
+            window.location.reload();
         } else {
             history.push("/login")
         }
