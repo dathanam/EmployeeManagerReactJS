@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import '../Style/AdminDepartment.css';
-import { axios } from '../HeaderAPI';
+import '../Department/Department.css';
+import api from '../../API';
 function Department() {
 
-    // Get Department
-    const DataLocalStorage = localStorage.getItem("accessToken");
     const [departmentname, setDepartmentname] = useState([]);
     const [departmentID, setDepartmentID] = useState([]);
     const [listDepartment, setListDepartment] = useState([]);
-    const [oneDepartment, setOneDepartment] = useState([]);
     const [department, setDepartment] = useState([]);
     const [pageStart, setpageStart] = useState({
         start: 1
@@ -16,10 +13,22 @@ function Department() {
     const [sumPage, setSumPage] = useState({
         sumPage: 1
     });
+    const [dataSearch, setDataSearch] = useState({
+        search: ""
+    })
+    const [dataCreateNew, setDataCreateNew] = useState({
+        nameDepartment: "",
+        officePhone: "(+84)",
+    })
+    const [listEmployeeDepartment, setListEmployeeDepartment] = useState([{
+        departmentname: "",
+    }]);
+    const [departmentEdit, setDepartmentEdit] = useState([{
+        nameDepartment: "",
+        officePhone: "",
+    }]);
     const getArr = async () => {
-        const response = await axios
-            .get("/department/paginate?page=" + pageStart.start + "&limit=5", { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
-            .catch((err) => console.log("Error: ", err));
+        const response = await api.getDepartmentpaginate(pageStart.start)
         if (response && response.data) {
             setListDepartment(response.data.items)
             setDepartment(response.data.items)
@@ -38,108 +47,7 @@ function Department() {
         getArr();
     }, [pageStart.start]);
 
-    //////// view table
-    function viewTable() {
-        const checkRole = localStorage.getItem("role")
-        if (checkRole === "0") {
-            return (
-                <ul className="responsive-table">
-                    <li className="table-header">
-                        <div className="col col-1">id</div>
-                        <div className="col col-3">Department Name</div>
-                        <div className="col col-2">Office Phone</div>
-                        <div className="col col-2">action</div>
-                    </li>
-                    {
-                        department.map((item) => {
-                            return (
-                                <li className="table-row" key={item.id}>
-                                    <div className="col col-1" data-label="Job Id">{item.id}</div>
-                                    <div className="col col-3" data-label="Customer Name">
-                                        <button className="nameDepartmentBtn"
-                                            // onClick={() => {
-                                            //     setOneDepartment(item)
-                                            // }}
-                                        >{item.nameDepartment}</button>
-                                    </div>
-                                    <div className="col col-2" data-label="Amount">{item.officePhone}</div>
-                                    <div className="col col-2" data-label="Payment Status">
-
-                                        <button className="nameDepartmentBtn" data-toggle="modal" data-target="#modalEmployeeDepartment"
-                                            onClick={() => {
-                                                setDepartmentname(item.nameDepartment)
-                                                getlistEmployeeDepartment(item.id);
-                                            }}
-                                        ><i className="fas fa-eye"></i></button>
-                                    </div>
-                                </li>
-                            )
-                        })
-                    }
-                </ul>
-            )
-        } else {
-            return (
-                <ul className="responsive-table">
-                    <li className="table-header">
-                        <div className="col col-1">id</div>
-                        <div className="col col-3">Department Name</div>
-                        <div className="col col-2">Office Phone</div>
-                        <div className="col col-2">action</div>
-                    </li>
-                    {
-                        department.map((item) => {
-                            return (
-                                <li className="table-row" key={item.id}>
-                                    <div className="col col-1" data-label="Job Id">{item.id}</div>
-                                    <div className="col col-3" data-label="Customer Name">
-                                        <button className="nameDepartmentBtn"
-                                            // onClick={() => {
-                                            //     setOneDepartment(item)
-                                            // }}
-                                        >{item.nameDepartment}</button>
-                                    </div>
-                                    <div className="col col-2" data-label="Amount">{item.officePhone}</div>
-                                    <div className="col col-2" data-label="Payment Status">
-
-                                        <button className="nameDepartmentBtn" data-toggle="modal" data-target="#modalEmployeeDepartment"
-                                            onClick={() => {
-                                                setDepartmentname(item.nameDepartment)
-                                                getlistEmployeeDepartment(item.id);
-                                            }}
-                                        ><i className="fas fa-eye"></i></button>
-
-                                        <button className="nameDepartmentBtn" data-toggle="modal" data-target="#editDepartment"
-                                            onClick={() => {
-                                                setDepartmentID(item.id)
-                                                setDepartmentEdit(item)
-                                            }}
-                                        ><i className="fas fa-edit"></i></button>
-
-                                        <i onClick={() => {
-                                            axios.delete(`department/` + item.id, { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
-                                                .then(res => {
-                                                    getArr();
-                                                })
-                                                .catch(
-                                                )
-                                        }} className="fas fa-trash-alt"></i>
-
-                                    </div>
-                                </li>
-                            )
-                        })
-                    }
-                </ul>
-            )
-        }
-    }
-
-
     ////Search Department by name
-    const [dataSearch, setDataSearch] = useState({
-        search: ""
-    })
     const submitSearch = () => {
         if (dataSearch.search === "") {
             getArr();
@@ -150,27 +58,19 @@ function Department() {
             setDepartment([...filterDepartment])
         }
     }
-
     useEffect(() => {
         submitSearch();
     }, [dataSearch.search]);
-
-    function handleSearch(e) {
+    function handleSearch(event) {
         const newdata = { ...dataSearch };
-        newdata[e.target.id] = e.target.value;
+        newdata[event.target.id] = event.target.value;
         setDataSearch(newdata);
     }
 
     ///// Create New
-
-    const [dataCreateNew, setDataCreateNew] = useState({
-        nameDepartment: "",
-        officePhone: "(+84)",
-    })
-
     function submitCreateNew(e) {
         e.preventDefault();
-        axios.post("/department", dataCreateNew, { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
+        api.postDepartment(dataCreateNew)
             .then((res) => {
                 setDataCreateNew({
                     nameDepartment: "",
@@ -187,24 +87,16 @@ function Department() {
                 alert("Error")
             })
     }
-
-    function handleCreateNew(e) {
+    function handleCreateNew(event) {
         const newdata = { ...dataCreateNew };
-        newdata[e.target.id] = e.target.value;
+        newdata[event.target.id] = event.target.value;
         setDataCreateNew(newdata);
     }
 
     // Get Employee Department
-    const [listEmployeeDepartment, setListEmployeeDepartment] = useState([{
-        departmentname: "",
-    }]);
-
     const getlistEmployeeDepartment = async (id) => {
-        const response = await axios
-            .get(`/department/managerId/` + id, { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
-            .catch((err) => console.log("Error: ", err));
+        const response = await api.getlistEmployeeDepartment(id)
         if (response && response.data) {
-            console.log(response)
             setListEmployeeDepartment(response.data)
         }
     }
@@ -213,18 +105,14 @@ function Department() {
     }, []);
 
     //// Edit Department
-    const [departmentEdit, setDepartmentEdit] = useState([{
-        nameDepartment: "",
-        officePhone: "",
-    }]);
-    function handleEditDepartment(e) {
+    function handleEditDepartment(event) {
         const newdata = { ...departmentEdit };
-        newdata[e.target.id] = e.target.value;
+        newdata[event.target.id] = event.target.value;
         setDepartmentEdit(newdata);
     }
     function submitEditDepartment(e) {
         e.preventDefault();
-        axios.put("/department/" + departmentID, departmentEdit, { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
+        api.putDepartment(departmentID, departmentEdit)
             .then((res) => {
                 setDataCreateNew({
                     nameDepartment: "",
@@ -255,19 +143,61 @@ function Department() {
                             })
                             getArr();
                         }} className="adminDepertmentSearchBtn"><i className="fas fa-reply-all">All</i></button>
-                        <input onChange={(e) => handleSearch(e)} id="search" value={dataSearch.search} type="text" placeholder="name..." className="adminDepertmentSearchInput"></input>
-                        {/* <button onClick={() => {
-                            submitSearch();
-                            setDataSearch({
-                                search: ""
-                            })
-                        }} className="adminDepertmentSearchBtn"><i className="fas fa-search"></i></button> */}
+                        <input onChange={handleSearch} id="search" value={dataSearch.search} type="text" placeholder="name..." className="adminDepertmentSearchInput"></input>
 
                     </div>
                 </div>
-                {
-                    viewTable()
-                }
+                <ul className="responsive-table">
+                    <li className="table-header">
+                        <div className="col col-1">id</div>
+                        <div className="col col-3">Department Name</div>
+                        <div className="col col-2">Office Phone</div>
+                        <div className="col col-2">action</div>
+                    </li>
+                    {
+                        department.map((item) => {
+                            return (
+                                <li className="table-row" key={item.id}>
+                                    <div className="col col-1">{item.id}</div>
+                                    <div className="col col-3">
+                                        <button className="nameDepartmentBtn"
+                                        >{item.nameDepartment}</button>
+                                    </div>
+                                    <div className="col col-2">{item.officePhone}</div>
+                                    <div className="col col-2">
+                                        <button className="nameDepartmentBtn" data-toggle="modal" data-target="#modalEmployeeDepartment"
+                                            onClick={() => {
+                                                setDepartmentname(item.nameDepartment)
+                                                getlistEmployeeDepartment(item.id);
+                                            }}
+                                        ><i className="fas fa-eye"></i></button>
+
+                                        {
+                                            localStorage.getItem('role') === "0" ? '' :
+                                                <>
+                                                    <button className="nameDepartmentBtn" data-toggle="modal" data-target="#editDepartment"
+                                                        onClick={() => {
+                                                            setDepartmentID(item.id)
+                                                            setDepartmentEdit(item)
+                                                        }}
+                                                    ><i className="fas fa-edit"></i></button>
+
+                                                    <i onClick={() => {
+                                                        api.deleteDepartment(item.id)
+                                                            .then(res => {
+                                                                getArr();
+                                                            })
+                                                            .catch(
+                                                            )
+                                                    }} className="fas fa-trash-alt"></i>
+                                                </>
+                                        }
+                                    </div>
+                                </li>
+                            )
+                        })
+                    }
+                </ul>
                 <div className="phanTrangBtn">
                     <button onClick={() => {
                         if (pageStart.start > 1) {
@@ -297,47 +227,18 @@ function Department() {
                             <form onSubmit={(e) => submitCreateNew(e)}>
                                 <div className="createDepartment">
                                     <label htmlFor="name">Name: </label>
-                                    <input onChange={(e) => handleCreateNew(e)} id="nameDepartment" value={dataCreateNew.nameDepartment} type="text"></input>
+                                    <input onChange={handleCreateNew} id="nameDepartment" value={dataCreateNew.nameDepartment} type="text"></input>
                                 </div>
 
                                 <div className="createDepartment">
                                     <label htmlFor="officePhone">Office Phone: </label>
-                                    <input onChange={(e) => handleCreateNew(e)} id="officePhone" value={dataCreateNew.officePhone} type="text"></input>
+                                    <input onChange={handleCreateNew} id="officePhone" value={dataCreateNew.officePhone} type="text"></input>
                                 </div>
                                 <div className="createDepartmentBtn">
                                     <button type="button" className="btn btn-close" data-dismiss="modal">Close</button>
                                     <button className="btn btn-save">Save</button>
                                 </div>
                             </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {/* Department Detail */}
-            <div className="modal fade" id="detailModail" role="modal">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <button type="button" className="close" data-dismiss="modal">&times;</button>
-                            <h4 className="modal-title">Department Detail</h4>
-                        </div>
-                        <div className="modal-body">
-                            <div className="createDepartment">
-                                <label htmlFor="name">Id: </label>
-                                <h3>{oneDepartment.id}</h3>
-                            </div>
-                            <div className="createDepartment">
-                                <label htmlFor="name">Name: </label>
-                                <h3>{oneDepartment.nameDepartment}</h3>
-                            </div>
-
-                            <div className="createDepartment">
-                                <label htmlFor="officePhone">Office Phone: </label>
-                                <h3>{oneDepartment.officePhone}</h3>
-                            </div>
-                            <div className="createDepartmentBtn">
-                                <button type="button" className="btn btn-close" data-dismiss="modal">Close</button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -396,12 +297,12 @@ function Department() {
                             <form onSubmit={(e) => submitEditDepartment(e)}>
                                 <div className="createDepartment">
                                     <label htmlFor="nameDepartment">Name: </label>
-                                    <input onChange={(e) => handleEditDepartment(e)} id="nameDepartment" value={departmentEdit.nameDepartment} type="text"></input>
+                                    <input onChange={handleEditDepartment} id="nameDepartment" value={departmentEdit.nameDepartment} type="text"></input>
                                 </div>
 
                                 <div className="createDepartment">
                                     <label htmlFor="officePhone">Office Phone: </label>
-                                    <input onChange={(e) => handleEditDepartment(e)} id="officePhone" value={departmentEdit.officePhone} type="text"></input>
+                                    <input onChange={handleEditDepartment} id="officePhone" value={departmentEdit.officePhone} type="text"></input>
                                 </div>
                                 <div className="createDepartmentBtn">
                                     <button type="button" className="btn btn-close" data-dismiss="modal">Close</button>

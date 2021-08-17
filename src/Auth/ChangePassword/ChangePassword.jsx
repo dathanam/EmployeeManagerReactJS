@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import '../UserComponent/UserStyle/ChangePassword.css';
+import '../ChangePassword/ChangePassword.css';
 import { useHistory } from "react-router-dom";
-import { axios } from '../HeaderAPI';
+import api from '../../API' 
 
 function ChangePassword() {
     const history = useHistory();
@@ -11,16 +11,20 @@ function ChangePassword() {
         newPass: "",
         confirm: ""
     })
-    function submitChangePass(e) {
+    const submitChangePass = (e) => {
         e.preventDefault();
-        axios.put("/user/auth/changePassword", changePassword)
+        api.changePass(changePassword)
             .then((res) => {
                 alert("Thay đổi mật khẩu thành công!")
+                setDataChangePassword({
+                    oldPass: "",
+                    newPass: "",
+                    confirm: ""
+                })
                 history.push("/login")
             })
             .catch(err => {
                 setDataChangePassword({
-                    username: "",
                     oldPass: "",
                     newPass: "",
                     confirm: ""
@@ -29,9 +33,9 @@ function ChangePassword() {
             })
     }
 
-    function handleChangePass(e) {
+    function handleChangePass(event) {
         const newdata = { ...changePassword };
-        newdata[e.target.id] = e.target.value;
+        newdata[event.target.id] = event.target.value;
         setDataChangePassword(newdata);
     }
     return (
@@ -48,15 +52,15 @@ function ChangePassword() {
                         </div>
                         <div className="changePasswordInputDev">
                             <label htmlFor="password">Old Pass:</label>
-                            <input onChange={(e) => handleChangePass(e)} id="oldPass" value={changePassword.oldPass} type="password" />
+                            <input onChange={handleChangePass} id="oldPass" value={changePassword.oldPass} type="password" />
                         </div>
                         <div className="changePasswordInputDev">
                             <label htmlFor="password">New Pass:</label>
-                            <input onChange={(e) => handleChangePass(e)} id="newPass" value={changePassword.newPass} type="password" />
+                            <input onChange={handleChangePass} id="newPass" value={changePassword.newPass} type="password" />
                         </div>
                         <div className="changePasswordInputDev">
                             <label htmlFor="password">Confirm:</label>
-                            <input onChange={(e) => handleChangePass(e)} id="confirm" value={changePassword.confirm} type="password" />
+                            <input onChange={handleChangePass} id="confirm" value={changePassword.confirm} type="password" />
                         </div>
                         <div className="changePasswordInputDevBtn">
                             <button>SAVE</button>

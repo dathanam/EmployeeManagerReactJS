@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Admin from './LayoutAdmin';
-import User from './LayoutUser';
+import Auth from './Layout/LayoutAuth';
+import Component from './Layout/LayoutAdmin';
 
 function App() {
   return (
       <Router>
         <Switch>
-          <Route path="/" exact component={User} />
-          <Route path="/admin" component={Admin} />
+          <Route path="/" exact component={Auth} />
+          <Route path="/admin" component={Component} />
         </Switch>
       </Router>
   );

@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import '../UserComponent/UserStyle/Login.css';
-import { Link } from "react-router-dom";
+import '../Login/Login.css';
 import { useHistory } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import { axios } from '../HeaderAPI';
+import api from '../../API';
 
-function Login(props) {
+function Login() {
     const history = useHistory();
-    function checkFristLogin() {
+    const checkFristLogin = () => {
         const UserLoginFrist = localStorage.getItem("loginFrist");
         if (UserLoginFrist === "true") {
             history.push("/admin")
@@ -23,18 +22,19 @@ function Login(props) {
     })
     function submit(e) {
         e.preventDefault();
-        axios.post('/auth/login', dataLogin)
+        api.login(dataLogin)
             .then((res) => {
+                console.log("aaa")
                 const decode = jwt_decode(res.data.accessToken);
                 localStorage.setItem("accessToken", res.data.accessToken);
                 localStorage.setItem("username", decode.username);
                 localStorage.setItem("email", decode.email);
                 localStorage.setItem("role", decode.role);
                 localStorage.setItem("loginFrist", decode.loginFrist);
-                localStorage.setItem("time", 3600);
                 checkFristLogin();
             })
             .catch(err => {
+                console.log("bbb")
                 setDataLogin({
                     username: "",
                     password: ""
@@ -43,9 +43,9 @@ function Login(props) {
             })
     }
 
-    function handle(e) {
+    function handle(event) {
         const newdata = { ...dataLogin };
-        newdata[e.target.id] = e.target.value;
+        newdata[event.target.id] = event.target.value;
         setDataLogin(newdata);
     }
 
@@ -59,11 +59,11 @@ function Login(props) {
                     <form className="loginForm" onSubmit={(e) => submit(e)}>
                         <div className="loginInputDev">
                             <label htmlFor="username">User Name:</label>
-                            <input onChange={(e) => handle(e)} id="username" value={dataLogin.username} type="text" required />
+                            <input onChange={handle} id="username" value={dataLogin.username} type="text" required />
                         </div>
                         <div className="loginInputDev">
                             <label htmlFor="password">Password:</label>
-                            <input onChange={(e) => handle(e)} id="password" value={dataLogin.password} type="password" required/>
+                            <input onChange={handle} id="password" value={dataLogin.password} type="password" required/>
                         </div>
                         <div className="loginInputDevBtn">
                             <button>LOGIN</button>

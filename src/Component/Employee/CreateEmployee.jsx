@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import '../Style/NewEmployee.css'
+import '../Employee/CreateEmployee.css'
 import { useHistory } from "react-router-dom";
-import { axios } from '../HeaderAPI';
+import api from '../../API';
 
 function NewEmployee() {
     const history = useHistory();
-    const DataLocalStorage = localStorage.getItem("accessToken");
-
     const [objectURL, setObjectURL] = useState({
         post: "",
         url: ""
     });
-
-    console.log(objectURL)
 
     // create
     const [dataCreateEmployee, setDataCreateEmployee] = useState({
@@ -23,8 +19,11 @@ function NewEmployee() {
         email: "",
         managerId: ""
     })
-    function submit(e) {
-        e.preventDefault();
+
+    const [listDepartment, setListDepartment] = useState([]);
+
+    function submit(e) {    
+        e.preventDefault();  
         var formdata = new FormData();
         formdata.append("nameEmployee", dataCreateEmployee.nameEmployee);
         formdata.append("jobTitle", dataCreateEmployee.jobTitle);
@@ -32,9 +31,8 @@ function NewEmployee() {
         formdata.append("email", dataCreateEmployee.email);
         formdata.append("managerId", dataCreateEmployee.managerId);
         formdata.append("photo", objectURL.post, "employee.jpg");
-        axios.post('/employee', formdata, { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
+        api.postEmployee(formdata)
             .then((res) => {
-                console.log(res)
                 if (res.status === 201) {
                     if (res.data.statusCode === 201) {
                         alert(res.data.message)
@@ -55,18 +53,15 @@ function NewEmployee() {
             })
     }
 
-    function handle(e) {
+    function handle(event) {
         const newdata = { ...dataCreateEmployee };
-        newdata[e.target.id] = e.target.value;
+        newdata[event.target.id] = event.target.value;
         setDataCreateEmployee(newdata);
     }
 
     //Get Department
-    const [listDepartment, setListDepartment] = useState([]);
     const getListDepartment = async () => {
-        const response = await axios
-            .get("/department", { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
-            .catch((err) => console.log("Error: ", err));
+        const response = await api.getDepartment()
         if (response && response.data) {
             setListDepartment(response.data)
         }
@@ -92,23 +87,23 @@ function NewEmployee() {
                         <div className="newEmployeeTextBody">
                             <div className="newEmployeeDev">
                                 <label htmlFor="nameEmployee">Name:</label>
-                                <input onChange={(e) => handle(e)} id="nameEmployee" value={dataCreateEmployee.nameEmployee} type="text" />
+                                <input onChange={handle} id="nameEmployee" value={dataCreateEmployee.nameEmployee} type="text" />
                             </div>
                             <div className="newEmployeeDev">
                                 <label htmlFor="jobTitle">Job Title:</label>
-                                <input onChange={(e) => handle(e)} id="jobTitle" value={dataCreateEmployee.jobTitle} type="text" />
+                                <input onChange={handle} id="jobTitle" value={dataCreateEmployee.jobTitle} type="text" />
                             </div>
                             <div className="newEmployeeDev">
                                 <label htmlFor="cellPhone">Phone:</label>
-                                <input onChange={(e) => handle(e)} id="cellPhone" value={dataCreateEmployee.cellPhone} type="text" />
+                                <input onChange={handle} id="cellPhone" value={dataCreateEmployee.cellPhone} type="text" />
                             </div>
                             <div className="newEmployeeDev">
                                 <label htmlFor="email">Email:</label>
-                                <input onChange={(e) => handle(e)} id="email" value={dataCreateEmployee.email} type="text" />
+                                <input onChange={handle} id="email" value={dataCreateEmployee.email} type="text" />
                             </div>
                             <div className="newEmployeeDev">
                                 <label htmlFor="managerId">Department:</label>
-                                <select onChange={(e) => handle(e)} id="managerId" value={dataCreateEmployee.managerId}>
+                                <select onChange={handle} id="managerId" value={dataCreateEmployee.managerId}>
                                     {
                                         listDepartment.map((item) => {
                                             return (

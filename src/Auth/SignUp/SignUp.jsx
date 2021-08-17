@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import '../Style/SignUp.css';
+import '../SignUp/SignUp.css';
 import { useHistory } from 'react-router-dom';
-import { axios } from '../HeaderAPI';
+import api from '../../API'
 
 function SignUp() {
-    const DataLocalStorage = localStorage.getItem("accessToken");
     const history = useHistory();
     const [dataSignUp, setDataSignUp] = useState({
         username: "",
@@ -12,7 +11,7 @@ function SignUp() {
     })
     function submit(e) {
         e.preventDefault();
-        axios.post(`auth/register`, dataSignUp, { headers: { "Authorization": `Bearer ${DataLocalStorage}` } })
+        api.signup(dataSignUp)
             .then((res) => {
                 if (res.status === 201) {
                     if (res.data.statusCode === 200) {
@@ -36,9 +35,9 @@ function SignUp() {
             })
     }
 
-    function handle(e) {
+    function handle(event) {
         const newdata = { ...dataSignUp };
-        newdata[e.target.id] = e.target.value;
+        newdata[event.target.id] = event.target.value;
         setDataSignUp(newdata);
     }
     return (
@@ -51,11 +50,11 @@ function SignUp() {
                     <form className="signUpForm" onSubmit={(e) => submit(e)}>
                         <div className="signUpInputDev">
                             <label htmlFor="username">User Name:</label>
-                            <input onChange={(e) => handle(e)} value={dataSignUp.username} id="username" type="text" />
+                            <input onChange={handle} value={dataSignUp.username} id="username" type="text" />
                         </div>
                         <div className="signUpInputDev">
                             <label htmlFor="name">Email:</label>
-                            <input onChange={(e) => handle(e)} value={dataSignUp.email} id="email" type="email" />
+                            <input onChange={handle} value={dataSignUp.email} id="email" type="email" />
                         </div>
                         <div className="signUpInputDevBtn">
                             <button>SIGN UP</button>
