@@ -128,8 +128,7 @@ function Header() {
                                 anchorEl={changePass}
                                 keepMounted
                                 open={Boolean(changePass)}
-                                onClose={handleCloseChangePass}
-                            >
+                                onClose={handleCloseChangePass}>
                                 <MenuItem>
                                     <div className="changePasswordInputUser">
                                         <form className="changePasswordForm" onSubmit={(e) => submitChangePass(e)}>
@@ -163,7 +162,6 @@ function Header() {
                         </div>
                     </div>
                 </ul>
-
             </div>
         </div>
     );
